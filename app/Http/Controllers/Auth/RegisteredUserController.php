@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Utilisateur;
+
+
 
 class RegisteredUserController extends Controller
 {
@@ -28,24 +31,37 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+    public function store(Request $request)
+{
+    // Valider les entrées
+    $request->validate([
+        'nom' => ['required', 'string', 'max:255'],
+        'prenom' => ['required', 'string', 'max:255'],
+        'email_personnel' => ['required', 'string', 'email', 'max:255', 'unique:utilisateurs,email_personnel'],
+        'mot_de_passe' => ['required', 'string', 'min:8'], // Validation du mot de passe
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    // Création de l'utilisateur
+    $user = Utilisateur::create([
+        'nom' => $request->nom,
+        'prenom' => $request->prenom,
+        'email_personnel' => $request->email_personnel,
+        'mot_de_passe' => Hash::make($request->mot_de_passe), // Hachage du mot de passe pour la sécurité
+        'email_academique'=> '',
+        'telephone'=> '',
+        'cne'=> '',
+        'num_apogee' => '',
+        'date_naissance' => NULL,
+        'ced_id' => NULL,
+        'lab_id' => NULL,
+        'role_id' => NULL,
+        'etablissement_id' => NULL,
+    ]);
 
-        event(new Registered($user));
+    // Connexion de l'utilisateur
+    Auth::login($user);  // Assurez-vous que $user est de type Utilisateur qui étend Authenticatable
 
-        Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
-    }
+    // Redirection vers la page appropriée après l'inscription
+    return redirect()->route('dashboard'); // Changez cela selon vos besoins
+}
 }
