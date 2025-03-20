@@ -1,34 +1,24 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\Models\Utilisateur; // Utiliser ton modèle Utilisateur
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
+     * Où rediriger les utilisateurs après la connexion.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
-     * Create a new controller instance.
+     * Créer une nouvelle instance de contrôleur.
      *
      * @return void
      */
@@ -36,5 +26,34 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function credentials(Request $request)
+    {
+        return [
+            'email_personnel' => $request->email_personnel,  // Utilise le nom de champ personnalisé
+            'mot_de_passe' => $request->mot_de_passe,        // Utilise le nom de champ personnalisé
+        ];
+    }
+
+
+    protected function attemptLogin(Request $request)
+    {
+        // Affiche les données de connexion pour déboguer
+        dd($request->only('email_personnel', 'mot_de_passe'));
+
+        return Auth::attempt(
+            $this->credentials($request), $request->filled('remember')
+        );
+    }
+
+    /**
+     * Utiliser le modèle Utilisateur pour l'authentification.
+     *
+     * @return void
+     */
+    protected function guard()
+    {
+        return Auth::guard('web'); // Si tu utilises le guard 'web'
     }
 }

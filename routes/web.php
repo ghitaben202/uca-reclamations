@@ -16,6 +16,11 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Auth::routes();
+// Page Dashboard, protégée par auth et verified
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['web'])->group(function () {
 
@@ -23,11 +28,6 @@ Route::middleware(['web'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
     });
-
-    // Page Dashboard, protégée par auth et verified
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
 });
 
 // Routes protégées par l'authentification
@@ -45,7 +45,6 @@ Route::post('/utilisateurs/store', [RegisteredUserController::class, 'store'])->
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
-
 Route::post('/register', [RegisteredUserController::class, 'store']);  // Envoie les données au contrôleur pour traitement
 
 // Routes de connexion
@@ -53,10 +52,9 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('/login', [AuthenticatedSessionController::class, 'store']);  // Gère l'authentification de l'utilisateur
-
-// Route de déconnexion
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';

@@ -62,6 +62,13 @@ class RegisteredUserController extends Controller
     Auth::login($user);  // Assurez-vous que $user est de type Utilisateur qui étend Authenticatable
 
     // Redirection vers la page appropriée après l'inscription
-    return redirect()->route('dashboard'); // Changez cela selon vos besoins
+    return redirect()->route('login'); // Changez cela selon vos besoins
 }
+
+public function dashboard()
+{
+    $user = Auth::user(); // Récupérer l'utilisateur connecté
+    return view('dashboard', compact('user'));
+}
+
 }

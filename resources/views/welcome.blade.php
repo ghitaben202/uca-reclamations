@@ -11,19 +11,7 @@
         <div class="col-lg-5 col-md-6 col-10">
             <div class="p-4 rounded shadow" style=" background-color: rgba(213, 200, 145, 0.5);">
                 <h4 class="text-center mb-3 fw-bold ">Connexion</h4>
-                <form action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <div class="mb-3 text-start">
-                        <label class="form-label ">Email</label>
-                        <input type="email" class="form-control" name="email" required>
-                    </div>
-                    <div class="mb-3 text-start">
-                        <label class="form-label ">Mot de passe</label>
-                        <input type="password" class="form-control" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-warning w-100 ">Se connecter</button>
-                    <p class="text-center mt-3">Pas encore inscrit ? <a href="{{ route('register') }}">Créer un compte</a></p>
-                </form>
+                <a href="{{ route('login') }}" class="btn btn-warning w-100 ">Se connecter si vous avez un compte</a>
             </div>
         </div>
         <!-- Inscription -->

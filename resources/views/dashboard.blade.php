@@ -27,7 +27,7 @@
             <div class="ms-auto dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                     <img src="https://via.placeholder.com/30" class="rounded-circle"> 
-                    {{ Auth::user()->name }}
+                    {{ auth()->user()->nom }}
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ route('logout') }}"
@@ -50,7 +50,7 @@
     </div>
     <div id="content">
         <h2>Tableau de bord</h2>
-        <p>Bienvenue, {{ Auth::user()->name }} !</p>
+        <p>Bienvenue, {{ auth()->user()->nom }}!</p>
     </div>
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {

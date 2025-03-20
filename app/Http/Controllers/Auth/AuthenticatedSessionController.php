@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Models\Utilisateur;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -23,26 +24,28 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->authenticate();
+        // Validation des informations de connexion
+        $credentials = $request->only('email_personnel', 'mot_de_passe');
 
-        $request->session()->regenerate();
+        if (Auth::attempt($credentials)) {
+            // Connexion réussie
+            return redirect()->route('dashboard');
+        }
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+         // Si la connexion échoue
+         return back()->withErrors([
+            'email_personnel' => 'Les informations de connexion sont incorrectes.',
+        ]);
     }
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        Auth::logout();
+        return redirect()->route('login');
     }
 }
