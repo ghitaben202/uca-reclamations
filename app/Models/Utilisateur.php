@@ -33,12 +33,6 @@ class Utilisateur extends Authenticatable
         'mot_de_passe',  // Cache le mot de passe pour éviter de l'afficher
     ];
 
-    // Assurer que le mot de passe est correctement haché lors de l'assignation
-    public function setMotDePasseAttribute($value)
-    {
-        $this->attributes['mot_de_passe'] = Hash::make($value);
-    }
-
     // Laravel s'attend à ce que le modèle ait cette méthode pour l'authentification
     public function getAuthIdentifierName()
     {
