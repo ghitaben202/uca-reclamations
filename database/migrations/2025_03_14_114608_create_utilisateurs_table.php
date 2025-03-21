@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('utilisateurs', function (Blueprint $table) {
             $table->engine = 'InnoDB'; 
-            $table->id();
+            $table->id()->change();
             $table->string('nom');
             $table->string('prenom');
             $table->string('email_academique');

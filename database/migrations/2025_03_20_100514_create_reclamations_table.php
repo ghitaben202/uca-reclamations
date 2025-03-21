@@ -14,11 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reclamations', function (Blueprint $table) {
-            $table->id();
+            $table->id()->change();
             $table->string('description');
             $table->string('titre');
-            $table->date('date_creation');
-            $table->date('date_update');
+            $table->date('date_creation')->default(DB::raw('CURRENT_TIMESTAMP'))->change();            $table->date('date_update');
             $table->string('statut')->default('en cours');
             $table->unsignedBigInteger('utilisateur_id')->nullable(); 
             $table->unsignedBigInteger('type_reclamations_id')->nullable(); 

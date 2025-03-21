@@ -13,6 +13,10 @@ class Utilisateur extends Authenticatable
 
     protected $table = 'utilisateurs';  // Spécifie la table manuellement si elle n'est pas 'users'
 
+    protected $primaryKey = 'id'; // Clé primaire
+
+    public $incrementing = true; // ID auto-incrémenté
+    
     protected $fillable = [
         'nom',
         'prenom',
@@ -37,6 +41,12 @@ class Utilisateur extends Authenticatable
     public function getAuthIdentifierName()
     {
         return 'email_personnel';  // Ou un autre champ unique pour l'authentification
+    }
+    
+    
+    public function getAuthIdentifier()
+    {
+    return $this->getKey(); // Retourne toujours l'ID
     }
 
     public function getAuthPassword()

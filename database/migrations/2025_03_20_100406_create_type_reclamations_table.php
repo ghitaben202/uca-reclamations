@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('type_reclamations', function (Blueprint $table) {
             $table->engine = 'InnoDB'; 
-            $table->id();
+            $table->id()->change();
             $table->string('nom');
             $table->string('description');
             $table->timestamps();
