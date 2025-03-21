@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\Utilisateur;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,4 +58,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
+
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
