@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
@@ -29,10 +30,18 @@ class AuthenticatedSessionController extends Controller
         // Validation des informations de connexion
         $credentials = $request->only('email_personnel', 'mot_de_passe');
 
-        if (Auth::attempt($credentials)) {
+        //if (Auth::attempt($credentials)) {
             // Connexion réussie
-            return redirect()->route('dashboard');
-        }
+            //return redirect()->route('dashboard');
+        //}
+        // Vérification du mot de passe
+        $user = Utilisateur::where('email_personnel', $credentials['email_personnel'])->first();
+        // Vérification du mot de passe
+    if ($user && Hash::check($credentials['mot_de_passe'], $user->mot_de_passe)) {
+        // Connexion réussie
+        Auth::login($user);
+        return redirect()->route('dashboard');
+    }
 
          // Si la connexion échoue
          return back()->withErrors([

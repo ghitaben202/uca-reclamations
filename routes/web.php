@@ -20,10 +20,9 @@ Auth::routes();
 // Page Dashboard, protégée par auth et verified
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->middleware(['auth', 'verified'])->name('dashboard');
+    })->name('dashboard');
 
 Route::middleware(['web'])->group(function () {
-
     // Page d'accueil
     Route::get('/', function () {
         return view('welcome');

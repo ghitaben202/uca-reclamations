@@ -20,14 +20,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="password" class="form-label">{{ __('Mot de passe') }}</label>
-                            <input type="password" name="mot_de_passe" id="password" class="form-control " required autocomplete="current-password">
+                            <label for="mot_de_passe" class="form-label">{{ __('Mot de passe') }}</label>
+                            <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control " required autocomplete="current-password">
                             @error('mot_de_passe')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">{{ __('Se connecter') }}</button>
+                        <button type="submit" class="btn btn-warning w-100">{{ __('Se connecter') }}</button>
                     </form>
                 </div>
             </div>
