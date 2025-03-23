@@ -48,20 +48,17 @@
         </div>
     </nav>
     <div id="sidebar" class="bg-dark text-white p-3">
-        <h4>Menu</h4>
+    <p>Bienvenue, {{ auth()->user()->nom }}!</p> 
         <ul class="nav flex-column">
             <li class="nav-item"><a href="#" class="nav-link text-white">Accueil</a></li>
             <li class="nav-item"><a href="#" class="nav-link text-white">Mes Reclamations</a></li>
         </ul>
     </div>
     <div id="content">
-        <h2>Tableau de bord</h2>
-        <p>Bienvenue, {{ auth()->user()->nom }}!</p>
-        <hr>
 
 <div class="container">
-    <h1>Mon Tableau de Bord</h1>
-    
+    <h4>Mon Tableau de Bord</h4>
+    <hr>
     <div class="row">
         <div class="col-md-4">
             <div class="card bg-secondary">
