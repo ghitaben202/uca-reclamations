@@ -8,11 +8,12 @@
     <!-- Bootstrap & Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
     <style>
         body {
             background: rgba(229, 221, 208, 0.5);
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Ubuntu', sans-serif;
         }
 
         .container-custom {
@@ -60,16 +61,17 @@
 
             <!-- Image et Titre -->
             <div class="col-md-6 ">
-                <div class="card card-custom shadow w-100">
-                    <img src="{{asset('images/logo.jpeg')}}" alt="Register" class="img-fluid mb-3 d-block mx-auto" style="max-height: 150px;">
+                <div class="card card-custom shadow w-100" style="background-color: rgba(255, 255, 255, 0.6);">
+                    <img src="{{asset('images/logo.jpeg')}}" alt="Register" class="img-fluid mb-3 d-block mx-auto" style="max-height: 150px; border: 3px solid  rgba(172, 94, 5, 0.8); border-radius: 0px; box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);">
                     <h5>Vous n'avez pas d'email académique ?</h5>
-                    <h3 class="fw-bold">Créer un compte</h3>
+                    <h3 class="fw-bold">Créer un compte </h3>
+                    <i class="fi fi-rr-arrow-right fs-3"></i>
                 </div>
             </div>
 
             <!-- Formulaire -->
             <div class="col-md-6 ">
-                <div class="card card-custom shadow w-100">
+                <div class="card card-custom shadow w-100" style="background-color: rgba(255, 255, 255, 0.6);">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -84,33 +86,35 @@
                         @endif
 
                         <div class="mb-3 text-start">
-                            <label for="nom" class="form-label">Nom</label>
+                            <label for="nom" class="form-label  fs-5">Nom</label>
                             <input id="nom" type="text" name="nom" value="{{ old('nom') }}" required autofocus class="form-control">
                         </div>
 
                         <div class="mb-3 text-start">
-                            <label for="prenom" class="form-label">Prénom</label>
+                            <label for="prenom" class="form-label fs-5">Prénom</label>
                             <input id="prenom" type="text" name="prenom" value="{{ old('prenom') }}" required class="form-control">
                         </div>
 
                         <div class="mb-3 text-start">
-                            <label for="email_personnel" class="form-label">Email personnel</label>
+                            <label for="email_personnel" class="form-label fs-5">Email personnel</label>
                             <input id="email_personnel" type="email" name="email_personnel" value="{{ old('email_personnel') }}" required class="form-control">
                         </div>
 
                         <div class="mb-3 text-start">
-                            <label for="mot_de_passe" class="form-label">Mot de passe</label>
+                            <label for="mot_de_passe" class="form-label fs-5">Mot de passe</label>
                             <input id="mot_de_passe" type="password" name="mot_de_passe" required class="form-control">
                         </div>
 
-                        <button type="submit" class="btn btn-custom w-100 mt-3">S'inscrire</button>
+                        <button type="submit" class="btn btn-custom w-100 mt-3" style="background-color: rgb(172, 94, 5);font-size: 18px;">S'inscrire</button>
                     </form>
                 </div>
             </div> 
 
         </div>
     </div>
-
+<footer class="text-center p-3">
+    © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
+</footer>
 </body>
 </html>
 

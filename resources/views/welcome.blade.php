@@ -17,14 +17,14 @@
     <div class="row justify-content-center gy-4 text-center">
         <!-- Connexion -->
         <div class="col-lg-5 col-md-6 col-10">
-            <div class="p-4 rounded shadow h-100 d-flex flex-column justify-content-center" style="background-color: rgb(255, 255, 255, 0.6);">
+            <div class="p-4 rounded shadow h-100 d-flex flex-column justify-content-center" style="background-color: rgba(255, 255, 255, 0.6);">
                 <h4 class="text-center mb-4 fw-bold" style="font-size: 18px;">Connexion</h4>
                 <a href="{{ route('login') }}" class="btn w-100 text-light fw-bolder" style="background-color: rgb(172, 94, 5);font-size: 18px;">Se connecter si vous avez un compte</a>
             </div>
         </div>
         <!-- Inscription -->
         <div class="col-lg-5 col-md-6 col-10">
-            <div class="p-4 rounded shadow h-100 d-flex flex-column justify-content-center" style="background-color: rgb(255, 255, 255, 0.6);">
+            <div class="p-4 rounded shadow h-100 d-flex flex-column justify-content-center" style="background-color: rgba(255, 255, 255, 0.6);">
                 <h4 class="text-center mb-4 fw-bold" style="font-size: 18px;">Pas d’email académique ? Inscrivez-vous ici !</h4>
                 <a href="{{ route('register') }}" class="btn w-100 text-light fw-bolder" style="background-color: rgb(172, 94, 5); font-size: 18px;">S'inscrire</a>
             </div>
