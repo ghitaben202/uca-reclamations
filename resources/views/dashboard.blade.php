@@ -29,10 +29,16 @@
         <div class="container-fluid">
             <button class="btn btn-light" id="toggleSidebar">☰</button>
             <div class="ms-auto dropdown">
+            @if(auth()->check())
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                 <i class="fa-solid fa-user"></i>
                     {{ auth()->user()->nom }}
                 </button>
+            @else
+            <button class="btn btn-secondary" type="button">
+                <i class="fa-solid fa-user"></i> Invité
+            </button>
+            @endif
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -46,7 +52,11 @@
         </div>
     </nav>
     <div id="sidebar" class="bg-dark text-white p-3">
-    <p>Bienvenue, {{ auth()->user()->nom }}!</p> 
+    @if(auth()->check())
+        <p>Bienvenue, {{ auth()->user()->nom }}!</p>
+    @else
+        <p>Bienvenue, invité !</p>
+    @endif
         <ul class="nav flex-column">
             <li class="nav-item"><a href="#" class="nav-link text-white">Accueil</a></li>
             <li class="nav-item"><a href="#" class="nav-link text-white">Mes Reclamations</a></li>

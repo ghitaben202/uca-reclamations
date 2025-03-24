@@ -17,10 +17,10 @@ use App\Http\Controllers\DashboardController;
 |
 */
 Auth::routes();
-// Page Dashboard, protégée par auth et verified
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+// Page Dashboard
+    //Route::get('/dashboard', function () {
+        //return view('dashboard');
+    //})->name('dashboard');
 
 Route::middleware(['web'])->group(function () {
     // Page d'accueil
@@ -54,10 +54,12 @@ Route::get('/login', function () {
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
 
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 

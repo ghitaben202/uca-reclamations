@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    //
     public function index()
 {
+    
     $userId = Auth::id();
     
     $enCours = Reclamation::where('utilisateur_id', Auth::id())

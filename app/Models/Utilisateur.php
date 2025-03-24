@@ -36,13 +36,6 @@ class Utilisateur extends Authenticatable
     protected $hidden = [
         'mot_de_passe',  // Cache le mot de passe pour éviter de l'afficher
     ];
-
-    // Laravel s'attend à ce que le modèle ait cette méthode pour l'authentification
-    public function getAuthIdentifierName()
-    {
-        return 'email_personnel';  // Ou un autre champ unique pour l'authentification
-    }
-    
     
     public function getAuthIdentifier()
     {
