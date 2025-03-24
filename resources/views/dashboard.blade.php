@@ -10,27 +10,60 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
-      
+        body {
+            background: rgba(229, 221, 208, 0.5);
+            font-family: Tahoma, Verdana, sans-serif;
+            font-size:16px;
+        }
         #sidebar {
             width: 250px;
             height: 100vh;
             position: fixed;
-            background: #343a40;
+            background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
         }
         #content {
             margin-left: 250px;
             padding: 20px;
         }
+        #navb{
+            background:rgba(156, 109, 50, 0.83);
+        }
+        #list1{
+            margin: 0;
+            border-top:1px solid gray;
+            border-bottom:1px solid gray;
+        }
+        #list2{
+            margin: 0;
+            border-bottom:1px solid gray;
+        }
+        .nav-item a:hover{
+            background-color:rgba(234, 213, 192, 0.4);
+        }
+        #card{
+            border:6px solid;
+            border-color:white white white rgba(156, 109, 50, 0.83);
+        }
+        #btn-user{
+            background-color:rgba(234, 213, 192, 0.4);
+            color:black;
+        }
+        #toggleSidebar{
+         background-color:rgba(234, 213, 192, 0.4);
+        }
+        p{
+            color:rgba(156, 109, 50, 0.83);
+        }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light" id="navb">
         <div class="container-fluid">
-            <button class="btn btn-light" id="toggleSidebar">☰</button>
+            <button class="btn" id="toggleSidebar">☰</button>
             <div class="ms-auto dropdown">
             @if(auth()->check())
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
                 <i class="fa-solid fa-user"></i>
                     {{ auth()->user()->nom }}
                 </button>
@@ -51,34 +84,34 @@
             </div>
         </div>
     </nav>
-    <div id="sidebar" class="bg-dark text-white p-3">
+    <div id="sidebar" class=" text-dark p-3">
     @if(auth()->check())
-        <p>Bienvenue, {{ auth()->user()->nom }}!</p>
+        <p class="text-center">{{ auth()->user()->nom }}</p>
     @else
         <p>Bienvenue, invité !</p>
     @endif
         <ul class="nav flex-column">
-            <li class="nav-item"><a href="#" class="nav-link text-white">Accueil</a></li>
-            <li class="nav-item"><a href="#" class="nav-link text-white">Mes Reclamations</a></li>
+            <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
+            <li class="nav-item" id="list2"><a href="#" class="nav-link text-dark">Mes Reclamations</a></li>
         </ul>
     </div>
     <div id="content">
 
-<div class="container">
+    <div class="container">
     <h4>Mon Tableau de Bord</h4>
     <hr>
     <div class="row">
         <div class="col-md-4">
-            <div class="card bg-secondary">
-                <div class="card-body text-light">
+            <div class="card bg-white" id="card">
+                <div class="card-body text-dark">
                     <h5 class="card-title "><i class="fa-solid fa-bars-progress"></i></i> Réclamations en cours</h5>
                     <p class="card-text">{{ $enCours }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-secondary">
-                <div class="card-body text-light">
+            <div class="card bg-white" id="card">
+                <div class="card-body text-dark">
                     
                     <h5 class="card-title"><i class="fa-solid fa-square-check"></i> Réclamations clôturées</h5>
                     <p class="card-text">{{ $cloturees }}</p>
@@ -86,8 +119,8 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="card bg-secondary">
-                <div class="card-body text-light">
+            <div class="card bg-white" id="card">
+                <div class="card-body text-dark">
                     <h5 class="card-title"> <i class="fa-solid fa-envelope"></i> Mes Réclamations</h5>
                     <p class="card-text">{{ $total }}</p>
                 </div>
