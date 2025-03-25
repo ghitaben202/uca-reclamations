@@ -8,6 +8,8 @@
     <!-- Bootstrap & Google Fonts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
 
     <style>
         body {
@@ -68,7 +70,7 @@
                     <img src="{{asset('images/logo.jpeg')}}" alt="Register" class="img-fluid mb-3 d-block mx-auto" style="max-height: 150px;border: 3px solid  rgba(172, 94, 5, 0.8); border-radius: 0px; box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);">
                     <h5>Vous avez un compte ?</h5>
                     <h4 class="fw-bold">Se connecter</h4>
-                    <span style="font-weight: bold; font-size: 23px;font-family:calibri">→</span>
+                    <i class="fi fi-rr-arrow-right fs-3"></i>
                 </div>
             </div>
             <div class="col-md-6 ">
@@ -76,20 +78,17 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-3">
-                            <label for="email_personnel" class="form-label">{{ __('Email') }}</label>
-                            <input type="email" name="email_personnel" id="email_personnel" class="form-control" value="{{ old('email_personnel') }}" required autofocus>
-                            @error('email_personnel')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label for="email_personnel" class="form-label">Email</label>
+                            <input type="email" name="email_personnel" id="email_personnel" class="form-control  @error('email_personnel') is-invalid @enderror" value="{{ old('email_personnel') }}" required autofocus>
                         </div>
                         <div class="mb-3">
-                            <label for="mot_de_passe" class="form-label">{{ __('Mot de passe') }}</label>
-                            <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control " required autocomplete="current-password">
-                            @error('mot_de_passe')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label for="mot_de_passe" class="form-label">Mot de passe</label>
+                            <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control @error('mot_de_passe') is-invalid @enderror" required autocomplete="current-password">
                         </div>
-                        <button type="submit" class="btn btn-custom w-100">{{ __('Se connecter') }}</button>
+                        @error('auth')
+                            <div class="text-danger mb-3">{{ $message }}</div>
+                        @enderror
+                        <button type="submit" class="btn btn-custom w-100">Se connecter</button>
                     </form>
                 </div>
             </div>

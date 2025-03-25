@@ -101,7 +101,7 @@
     <h4>Mon Tableau de Bord</h4>
     <hr>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <div class="card bg-white" id="card">
                 <div class="card-body text-dark">
                     <h5 class="card-title "><i class="fa-solid fa-bars-progress"></i></i> Réclamations en cours</h5>
@@ -109,7 +109,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <div class="card bg-white" id="card">
                 <div class="card-body text-dark">
                     
@@ -118,7 +118,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <div class="card bg-white" id="card">
                 <div class="card-body text-dark">
                     <h5 class="card-title"> <i class="fa-solid fa-envelope"></i> Mes Réclamations</h5>

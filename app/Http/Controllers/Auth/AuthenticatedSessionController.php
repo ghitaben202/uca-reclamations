@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
 
          // Si la connexion échoue
          return back()->withErrors([
-            'email_personnel' => 'Les informations de connexion sont incorrectes.',
+            'auth' => 'Email ou mot de passe incorrect.',
         ]);
     }
 
