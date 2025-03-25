@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('ced', function (Blueprint $table) {
-            $table->id()->change();
+            $table->id();
             $table->string('nom');
             $table->timestamps();
         });

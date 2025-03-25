@@ -33,6 +33,16 @@ class DashboardController extends Controller
     return view('dashboard', compact('enCours', 'cloturees', 'total'));
 }
 
+
+public function showReclamations()
+{
+    $userId = Auth::id();
+    // Récupérer les réclamations de l'utilisateur
+    $reclamations = Reclamation::where('utilisateur_id', $userId)->get();
+
+    return view('reclamations.index', compact('reclamations'));
+}
+
 }
 
 

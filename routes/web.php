@@ -56,6 +56,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+Route::get('/reclamations', [DashboardController::class, 'showReclamations'])->name('reclamations.index');
 
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
