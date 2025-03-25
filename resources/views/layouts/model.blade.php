@@ -67,6 +67,10 @@
                 <i class="fa-solid fa-user"></i>
                     {{ auth()->user()->nom }}
                 </button>
+            @else
+            <button class="btn btn-secondary" type="button">
+                <i class="fa-solid fa-user"></i> Invité
+            </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ route('logout') }}"
@@ -83,6 +87,8 @@
     <div id="sidebar" class=" text-dark p-3">
     @if(auth()->check())
         <p class="text-center">{{ auth()->user()->nom }}</p>
+    @else
+        <p>Bienvenue, invité !</p>
     @endif
         <ul class="nav flex-column">
             <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
@@ -92,36 +98,33 @@
     <div id="content">
 
     <div class="container">
-    <h4>Mon Tableau de Bord</h4>
-    <hr>
-    <div class="row">
-        <div class="col-md-4 mb-2">
-            <div class="card bg-white" id="card">
-                <div class="card-body text-dark">
-                    <h5 class="card-title "><i class="fa-solid fa-bars-progress"></i></i> Réclamations en cours</h5>
-                    <p class="card-text">{{ $enCours }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-2">
-            <div class="card bg-white" id="card">
-                <div class="card-body text-dark">
-                    
-                    <h5 class="card-title"><i class="fa-solid fa-square-check"></i> Réclamations clôturées</h5>
-                    <p class="card-text">{{ $cloturees }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-2">
-            <div class="card bg-white" id="card">
-                <div class="card-body text-dark">
-                    <h5 class="card-title"> <i class="fa-solid fa-envelope"></i> Mes Réclamations</h5>
-                    <p class="card-text">{{ $total }}</p>
-                </div>
-            </div>
-        </div>
+        <h4>Mes Réclamations</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Objet</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($reclamations as $reclamation)
+                    <tr>
+                        <td>{{ $reclamation->id }}</td>
+                        <td>{{ $reclamation->titre }}</td>
+                        <td>{{ $reclamation->statut }}</td>
+                        <td>{{ $reclamation->date_creation }}</td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
-</div>
+
 
 
     </div>
