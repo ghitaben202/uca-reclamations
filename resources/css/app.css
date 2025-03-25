@@ -1,11 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body {
-    font-family: 'Ubuntu', sans-serif;
-}
 
 h1, h2, h3, h4, h5, h6, p  {
     font-family: 'Almarai', sans-serif;
     font-weight: bolder;
+}
+body {
+    background: rgba(229, 221, 208, 0.5);
+    font-family: 'Ubuntu', sans-serif;
+    font-size:16px;
+}
+#sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(229, 221, 208, 0.5);
+    padding-top: 20px;
+}
+#content {
+    margin-left: 250px;
+    padding: 20px;
+}
+#navb{
+    background:rgba(156, 109, 50, 0.83);
+}
+#list1{
+    margin: 0;
+    border-top:1px solid gray;
+    border-bottom:1px solid gray;
+}
+#list2{
+    margin: 0;
+    border-bottom:1px solid gray;
+}
+.nav-item a:hover{
+    background-color:rgba(234, 213, 192, 0.4);
+}
+#card{
+    border:6px solid;
+    border-color:white white white rgba(156, 109, 50, 0.83);
+}
+#btn-user{
+    background-color:rgba(234, 213, 192, 0.4);
+    color:black;
+}
+#toggleSidebar{
+ background-color:rgba(234, 213, 192, 0.4);
+}
+p{
+    color:rgba(156, 109, 50, 0.83);
 }
