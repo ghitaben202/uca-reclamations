@@ -57,6 +57,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/reclamations', [DashboardController::class, 'showReclamations'])->name('reclamations.index');
 Route::get('/reclamations/data', [ReclamationController::class, 'getData'])->name('reclamations.data');
 
+Route::get('/reclamations/ajouter',function () {
+    return view('reclamations.ajouterReclamation');
+})->name('reclamations.ajouterReclamation');
+
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
 

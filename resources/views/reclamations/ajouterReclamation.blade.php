@@ -21,14 +21,17 @@
         }
         #sidebar {
             width: 250px;
-            height: 100vh;
-            position: fixed;
+            min-height: 140vh; 
+            position: absolute;
+            left:0;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
+            overflow-y: auto;
         }
         #content {
             margin-left: 250px;
             padding: 20px;
+            flex-grow: 1;
         }
         #navb{
             background:rgba(156, 109, 50, 0.83);
@@ -97,35 +100,51 @@
     <div id="content">
 
     <div class="container">
-        <h4>Mes Réclamations</h4>
-        <table id="reclamationsTable" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Objet</th>
-                    <th scope="col">Statut</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($reclamations as $reclamation)
-                    <tr>
-                        <td>{{ $reclamation->id }}</td>
-                        <td>{{ $reclamation->titre }}</td>
-                        <td>{{ $reclamation->statut }}</td>
-                        <td>{{ $reclamation->date_creation }}</td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <h4>Ajouter une Réclamation</h4>
+        <hr>
+        <form method="POST" action="">
+            @csrf
+            <div class="mb-3">
+                <label for="titre" class="form-label">Titre de réclamation</label>
+                <input type="text" class="form-control" name="titre" required>
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Catégorie du réclamant</label>
+                <select id="role" name="role" class="form-control">
+                    <option value="">Sélectionnez une catégorie</option>
+                    <option value="etudiant">Étudiant</option>
+                    <option value="enseignant">Enseignant</option>
+                    <option value="doctorant">Doctorant</option>
+                </select>
+            </div>
+            <!-- Champs pour Étudiant -->
+            <div id="etudiant-fields" class="role-fields" style="display: none;">
+                <div class="mb-3">
+                    <label for="nom" class="form-label">Nom</label>
+                    <input type="text" class="form-control" name="nom">
+                </div>
+                <div class="mb-3">
+                    <label for="prenom" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" name="prenom">
+                </div>
+                <div class="mb-3">
+                    <label for="email_personnel" class="form-label">Email personnel</label>
+                    <input type="email" class="form-control" name="email_personnel">
+                </div>
+                <div class="mb-3">
+                    <label for="cne" class="form-label">CNE</label>
+                    <input type="text" class="form-control" name="cne">
+                </div>
+                <div class="mb-3">
+                    <label for="telephone" class="form-label">Téléphone</label>
+                    <input type="text" class="form-control" name="telephone">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Soumettre</button>
+        </form>
+        
     </div>
-
-
-
     </div>
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {
@@ -139,27 +158,15 @@
                 content.style.marginLeft = '0';
             }
         });
+        document.getElementById('role').addEventListener('change', function() {
+        let selectedRole = this.value;
+        document.querySelectorAll('.role-fields').forEach(fieldset => fieldset.style.display = 'none');
 
-
-  
-    $(document).ready(function() {
-    $('#reclamationsTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('reclamations.data') }}",
-        columns: [
-            { data: 'id', name: 'id' },
-            { data: 'titre', name: 'titre' },
-            { data: 'date_creation', name: 'date_creation' },
-            { data: 'statut', name: 'statut' },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
-        ],
-        language: {
-            url: "{ asset('assets/i18n/French.json') }}"
+        if (selectedRole === 'etudiant') {
+            document.getElementById('etudiant-fields').style.display = 'block';
         }
-    });
-    });
-</script>
+        // Ajouter ici l'affichage pour enseignant et doctorant
+        });
     </script>
 </body>
 </html>

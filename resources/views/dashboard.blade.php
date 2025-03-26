@@ -87,6 +87,7 @@
         <ul class="nav flex-column">
             <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
             <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>
+            <li class="nav-item" id="list2"><a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">Ajouter Réclamation</a></li>
         </ul>
     </div>
     <div id="content">
