@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,14 +21,17 @@
         }
         #sidebar {
             width: 250px;
-            height: 100vh;
-            position: fixed;
+            min-height: 140vh; 
+            position: absolute;
+            left:0;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
+            overflow-y: auto;
         }
         #content {
             margin-left: 250px;
             padding: 20px;
+            flex-grow: 1;
         }
         #navb{
             background:rgba(156, 109, 50, 0.83);
@@ -97,36 +100,51 @@
     <div id="content">
 
     <div class="container">
-        <h4>Mes Réclamations</h4>
+        <h4>Ajouter une Réclamation</h4>
         <hr>
-        <table id="reclamationsTable" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Objet</th>
-                    <th scope="col">Statut</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($reclamations as $reclamation)
-                    <tr>
-                        <td>{{ $reclamation->id }}</td>
-                        <td>{{ $reclamation->titre }}</td>
-                        <td>{{ $reclamation->statut }}</td>
-                        <td>{{ $reclamation->date_creation }}</td>
-                        <td>
-                        <a href="{{ route('reclamations.details', $reclamation->id) }}" class="btn btn-info">Voir les détails</a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <form method="POST" action="">
+            @csrf
+            <div class="mb-3">
+                <label for="titre" class="form-label">Titre de réclamation</label>
+                <input type="text" class="form-control" name="titre" required>
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Catégorie du réclamant</label>
+                <select id="role" name="role" class="form-control">
+                    <option value="">Sélectionnez une catégorie</option>
+                    <option value="etudiant">Étudiant</option>
+                    <option value="enseignant">Enseignant</option>
+                    <option value="doctorant">Doctorant</option>
+                </select>
+            </div>
+            <!-- Champs pour Étudiant -->
+            <div id="etudiant-fields" class="role-fields" style="display: none;">
+                <div class="mb-3">
+                    <label for="nom" class="form-label">Nom</label>
+                    <input type="text" class="form-control" name="nom">
+                </div>
+                <div class="mb-3">
+                    <label for="prenom" class="form-label">Prénom</label>
+                    <input type="text" class="form-control" name="prenom">
+                </div>
+                <div class="mb-3">
+                    <label for="email_personnel" class="form-label">Email personnel</label>
+                    <input type="email" class="form-control" name="email_personnel">
+                </div>
+                <div class="mb-3">
+                    <label for="cne" class="form-label">CNE</label>
+                    <input type="text" class="form-control" name="cne">
+                </div>
+                <div class="mb-3">
+                    <label for="telephone" class="form-label">Téléphone</label>
+                    <input type="text" class="form-control" name="telephone">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-warning">Soumettre</button>
+        </form>
+        
     </div>
-
-
-
     </div>
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {
@@ -140,40 +158,15 @@
                 content.style.marginLeft = '0';
             }
         });
+        document.getElementById('role').addEventListener('change', function() {
+        let selectedRole = this.value;
+        document.querySelectorAll('.role-fields').forEach(fieldset => fieldset.style.display = 'none');
 
-        $(document).ready(function() {
-        $('#reclamationsTable').DataTable({
-        "paging": true,      
-        "searching": true,   
-        "ordering": true,    
-        "info": true,        
-        "lengthMenu": [5, 10, 25, 50], 
-        "language": {
-            "sProcessing":     "Traitement en cours...",
-            "sSearch":         "Rechercher :",
-            "sLengthMenu":     "Afficher _MENU_ éléments",
-            "sInfo":           "Affichage de _START_ à _END_ sur _TOTAL_ éléments",
-            "sInfoEmpty":      "Affichage de 0 à 0 sur 0 éléments",
-            "sInfoFiltered":   "(filtré à partir de _MAX_ éléments au total)",
-            "sInfoPostFix":    "",
-            "sLoadingRecords": "Chargement en cours...",
-            "sZeroRecords":    "Aucun élément à afficher",
-            "sEmptyTable":     "Aucune donnée disponible dans le tableau",
-            "oPaginate": {
-                "sFirst":    "Premier",
-                "sPrevious": "Précédent",
-                "sNext":     "Suivant",
-                "sLast":     "Dernier"
-            },
-            "oAria": {
-                "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
-                "sSortDescending": ": activer pour trier la colonne par ordre décroissant"
-            }
+        if (selectedRole === 'etudiant') {
+            document.getElementById('etudiant-fields').style.display = 'block';
         }
-    });
-});
-
-</script>
+        // Ajouter ici l'affichage pour enseignant et doctorant
+        });
     </script>
 </body>
 </html>
