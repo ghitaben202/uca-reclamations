@@ -139,6 +139,79 @@
                     <label for="telephone" class="form-label">Téléphone</label>
                     <input type="text" class="form-control" name="telephone">
                 </div>
+                @php
+                    use Illuminate\Support\Facades\DB;
+                    $etablissements = DB::table('etablissements')->get();
+                    $categorie = request()->input('role');
+                    $type_reclamations = DB::table('type_reclamations')
+                           ->when($categorie, function ($query, $categorie) {
+                               return $query->where('categorie', $categorie);
+                           })
+                           ->get();
+                @endphp
+                <div class="mb-3">
+                    <label for="etab" class="form-label">Etablissement</label>
+                    <select id="etab" name="etab" class="form-control">
+                        <option value="">Veuillez choisir votre établissement</option>
+                        @foreach ($etablissements as $etablissement)
+                            <option value="{{ $etablissement->id }}">{{ $etablissement->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="type_reclamation" class="form-label">Type de réclamation</label>
+                    <select id="type_reclamation" name="type_reclamation" class="form-control">
+                        <option value="">Veuillez choisir...</option>
+                        @foreach ($type_reclamations as $type_reclamation)
+                            <option value="{{ $type_reclamation->id }}">{{ $type_reclamation->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="contenu" class="form-label">Contenu</label>
+                    <textarea name="contenu" id="" cols="115" rows="5"></textarea>
+                </div>
+            </div>
+
+            <!-- Champs pour Doctorant -->
+            <div id="doctorant-fields" class="role-fields" style="display: none;">
+                <div class="mb-3">
+                    <label for="email_personnel" class="form-label">Email personnel</label>
+                    <input type="email" class="form-control" name="email_personnel">
+                </div>
+                <div class="mb-3">
+                    <label for="telephone" class="form-label">Téléphone</label>
+                    <input type="text" class="form-control" name="telephone">
+                </div>
+                <div class="mb-3">
+                    <label for="ced" class="form-label">Centre d'étude</label>
+                    <select name="ced" id="ced" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <!-- Champs pour Adminstratifs -->
+            <div id="administratif-fields" class="role-fields" style="display: none;">
+                <div class="mb-3">
+                    <label for="email_personnel" class="form-label">Email personnel</label>
+                    <input type="email" class="form-control" name="email_personnel">
+                </div>
+                <div class="mb-3">
+                    <label for="telephone" class="form-label">Téléphone</label>
+                    <input type="text" class="form-control" name="telephone">
+                </div>
+                <div class="mb-3">
+                    <label for="ced" class="form-label">Catégorie administrative </label>
+                    <select name="ced" id="ced" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="etablissement" class="form-label">Etablissement</label>
+                    <select name="etablissement" id="etablissement" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-warning">Soumettre</button>
@@ -164,6 +237,12 @@
 
         if (selectedRole === 'etudiant') {
             document.getElementById('etudiant-fields').style.display = 'block';
+        }
+        if (selectedRole === 'doctorant') {
+            document.getElementById('doctorant-fields').style.display = 'block';
+        }
+        if (selectedRole === 'enseignant') {
+            document.getElementById('administratif-fields').style.display = 'block';
         }
         // Ajouter ici l'affichage pour enseignant et doctorant
         });
