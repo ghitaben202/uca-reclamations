@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\Utilisateur;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReclamationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,6 +58,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::get('/reclamations', [DashboardController::class, 'showReclamations'])->name('reclamations.index');
 Route::get('/reclamations/data', [ReclamationController::class, 'getData'])->name('reclamations.data');
+Route::get('/reclamation/{id}', [ReclamationController::class, 'show'])->name('reclamations.details');
+
 
 Route::get('/reclamations/ajouter',function () {
     return view('reclamations.ajouterReclamation');

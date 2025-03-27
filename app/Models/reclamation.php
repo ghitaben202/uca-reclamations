@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\TypeReclamation;
 
 class Reclamation extends Model
 {
@@ -18,6 +19,11 @@ class Reclamation extends Model
     public function utilisateur()
     {
         return $this->belongsTo(Utilisateur::class, 'utilisateur_id');
+    }
+
+    public function typeReclamation()
+    {
+    return $this->belongsTo(TypeReclamation::class, 'type_reclamation_id');
     }
 
     
