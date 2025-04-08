@@ -5,12 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class typeReclamation extends Model
+class CentreEtude extends Model
 {
     use HasFactory;
-
-    public function role()
-    {
-        return $this->belongsTo(Role::class, 'role_id');
-    }
+    protected $table = 'ced'; // Nom de la table
+    protected $fillable = ['nom']; // Colonnes remplissables
 }

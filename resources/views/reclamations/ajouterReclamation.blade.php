@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -21,7 +22,7 @@
         }
         #sidebar {
             width: 250px;
-            min-height: 140vh; 
+            min-height: 180vh; 
             position: absolute;
             left:0;
             background-color: rgba(229, 221, 208, 0.5);
@@ -93,8 +94,8 @@
     @endif
         <ul class="nav flex-column">
             <li class="nav-item" id="list1"><a href="{{ route('dashboard') }}" class="nav-link text-dark">Accueil</a></li>
-            <li class="nav-item" id="list2"><a href="#" class="nav-link text-dark">Mes Reclamations</a></li>
-            <li class="nav-item" id="list2"><a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">Ajouter Réclamation</a></li>
+            <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>
+            <li class="nav-item" id="list2"><a href="#" class="nav-link text-dark">Ajouter Réclamation</a></li>
         </ul>
     </div>
     <div id="content">
@@ -110,142 +111,23 @@
             </div>
             <div class="mb-3">
                 <label for="role" class="form-label">Catégorie du réclamant</label>
-                <select id="role" name="role" class="form-control">
+                <select id="role" name="role" class="form-control" hx-post="{{ route('reclamations.getFields') }}"
+                hx-trigger="change"
+                hx-target="#fields-container"
+                hx-swap="innerHTML">
                     <option value="">Sélectionnez une catégorie</option>
-                    <option value="etudiant">Étudiant</option>
-                    <option value="enseignant">Enseignant</option>
-                    <option value="doctorant">Doctorant</option>
+                    @foreach($roles as $role)
+                        <option value="{{ $role->nom }}">{{ $role->nom }}</option>
+                    @endforeach
                 </select>
             </div>
-            <!-- Champs pour Étudiant -->
-            <div id="etudiant-fields" class="role-fields" style="display: none;">
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Nom</label>
-                    <input type="text" class="form-control" name="nom">
-                </div>
-                <div class="mb-3">
-                    <label for="prenom" class="form-label">Prénom</label>
-                    <input type="text" class="form-control" name="prenom">
-                </div>
-                <div class="mb-3">
-                    <label for="email_personnel" class="form-label">Email personnel</label>
-                    <input type="email" class="form-control" name="email_personnel">
-                </div>
-                <div class="mb-3">
-                    <label for="cne" class="form-label">CNE</label>
-                    <input type="text" class="form-control" name="cne">
-                </div>
-                <div class="mb-3">
-                    <label for="telephone" class="form-label">Téléphone</label>
-                    <input type="text" class="form-control" name="telephone">
-                </div>
-                @php
-                    use Illuminate\Support\Facades\DB;
-                    $etablissements = DB::table('etablissements')->get();
-                    $categorie = request()->input('role');
-                    $type_reclamations = DB::table('type_reclamations')
-                           ->when($categorie, function ($query, $categorie) {
-                               return $query->where('categorie', $categorie);
-                           })
-                           ->get();
-                @endphp
-                <div class="mb-3">
-                    <label for="etab" class="form-label">Etablissement</label>
-                    <select id="etab" name="etab" class="form-control">
-                        <option value="">Veuillez choisir votre établissement</option>
-                        @foreach ($etablissements as $etablissement)
-                            <option value="{{ $etablissement->id }}">{{ $etablissement->nom }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="type_reclamation" class="form-label">Type de réclamation</label>
-                    <select id="type_reclamation" name="type_reclamation" class="form-control">
-                        <option value="">Veuillez choisir...</option>
-                        @foreach ($type_reclamations as $type_reclamation)
-                            <option value="{{ $type_reclamation->id }}">{{ $type_reclamation->nom }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="contenu" class="form-label">Contenu</label>
-                    <textarea name="contenu" id="" cols="115" rows="5"></textarea>
-                </div>
-            </div>
-
-            <!-- Champs pour Doctorant -->
-            <div id="doctorant-fields" class="role-fields" style="display: none;">
-                <div class="mb-3">
-                    <label for="email_personnel" class="form-label">Email personnel</label>
-                    <input type="email" class="form-control" name="email_personnel">
-                </div>
-                <div class="mb-3">
-                    <label for="telephone" class="form-label">Téléphone</label>
-                    <input type="text" class="form-control" name="telephone">
-                </div>
-                <div class="mb-3">
-                    <label for="ced" class="form-label">Centre d'étude</label>
-                    <select name="ced" id="ced" class="form-control">
-                        <option value=""></option>
-                    </select>
-                </div>
-            </div>
-            <!-- Champs pour Adminstratifs -->
-            <div id="administratif-fields" class="role-fields" style="display: none;">
-                <div class="mb-3">
-                    <label for="email_personnel" class="form-label">Email personnel</label>
-                    <input type="email" class="form-control" name="email_personnel">
-                </div>
-                <div class="mb-3">
-                    <label for="telephone" class="form-label">Téléphone</label>
-                    <input type="text" class="form-control" name="telephone">
-                </div>
-                <div class="mb-3">
-                    <label for="ced" class="form-label">Catégorie administrative </label>
-                    <select name="ced" id="ced" class="form-control">
-                        <option value=""></option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label for="etablissement" class="form-label">Etablissement</label>
-                    <select name="etablissement" id="etablissement" class="form-control">
-                        <option value=""></option>
-                    </select>
-                </div>
-            </div>
+            <div id="fields-container"></div><br>
 
             <button type="submit" class="btn btn-warning">Soumettre</button>
         </form>
         
     </div>
     </div>
-    <script>
-        document.getElementById('toggleSidebar').addEventListener('click', function() {
-            let sidebar = document.getElementById('sidebar');
-            let content = document.getElementById('content');
-            if (sidebar.style.display === 'none') {
-                sidebar.style.display = 'block';
-                content.style.marginLeft = '250px';
-            } else {
-                sidebar.style.display = 'none';
-                content.style.marginLeft = '0';
-            }
-        });
-        document.getElementById('role').addEventListener('change', function() {
-        let selectedRole = this.value;
-        document.querySelectorAll('.role-fields').forEach(fieldset => fieldset.style.display = 'none');
-
-        if (selectedRole === 'etudiant') {
-            document.getElementById('etudiant-fields').style.display = 'block';
-        }
-        if (selectedRole === 'doctorant') {
-            document.getElementById('doctorant-fields').style.display = 'block';
-        }
-        if (selectedRole === 'enseignant') {
-            document.getElementById('administratif-fields').style.display = 'block';
-        }
-        // Ajouter ici l'affichage pour enseignant et doctorant
-        });
-    </script>
+    
 </body>
 </html>

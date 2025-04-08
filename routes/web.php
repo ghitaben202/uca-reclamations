@@ -19,10 +19,12 @@ use App\Http\Controllers\ReclamationController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Authentification par défaut
 Auth::routes();
 
+// Page d'accueil
 Route::middleware(['web'])->group(function () {
-    // Page d'accueil
     Route::get('/', function () {
         return view('welcome');
     });
@@ -43,9 +45,10 @@ Route::post('/utilisateurs/store', [RegisteredUserController::class, 'store'])->
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
+
 Route::post('/register', [RegisteredUserController::class, 'store']);  // Envoie les données au contrôleur pour traitement
 
-// Routes de connexion
+// Routes de connexion/déconnexion
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
@@ -54,16 +57,19 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('l
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
+
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+// Reclamations
 Route::get('/reclamations', [DashboardController::class, 'showReclamations'])->name('reclamations.index');
 Route::get('/reclamations/data', [ReclamationController::class, 'getData'])->name('reclamations.data');
 Route::get('/reclamation/{id}', [ReclamationController::class, 'show'])->name('reclamations.details');
 
+Route::get('/reclamations/ajouter', [ReclamationController::class, 'create'])
+    ->name('reclamations.ajouterReclamation');
 
-Route::get('/reclamations/ajouter',function () {
-    return view('reclamations.ajouterReclamation');
-})->name('reclamations.ajouterReclamation');
+Route::post('/reclamations/get-fields', [ReclamationController::class, 'getFields'])
+->name('reclamations.getFields');
 
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
