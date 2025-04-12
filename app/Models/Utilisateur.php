@@ -47,5 +47,11 @@ class Utilisateur extends Authenticatable
         return $this->mot_de_passe;  // Utilise le champ 'mot_de_passe'
     }
 
+    public function reclamations()
+    {
+        return $this->hasMany(Reclamation::class, 'utilisateur_id');
+    }
+
+
    
 }

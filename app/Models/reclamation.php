@@ -23,8 +23,10 @@ class Reclamation extends Model
 
     public function typeReclamation()
     {
-    return $this->belongsTo(TypeReclamation::class, 'type_reclamation_id');
+        return $this->belongsTo(typeReclamation::class, 'type_reclamation_id');
     }
+    
+
 
     
 }

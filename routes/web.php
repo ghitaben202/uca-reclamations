@@ -7,6 +7,7 @@ use App\Models\Utilisateur;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReclamationController;
+use App\Http\Controllers\AgentController;
 
 
 /*
@@ -55,6 +56,9 @@ Route::get('/login', function () {
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+//Agent
+Route::get('/dashboard-agent', [AgentController::class, 'dashboard'])->name('agent.dashboardAgent');
 
 
 

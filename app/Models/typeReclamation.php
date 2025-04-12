@@ -13,4 +13,15 @@ class typeReclamation extends Model
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public function reclamations()
+    {
+        return $this->hasMany(Reclamation::class, 'type_reclamations_id');
+    }
+
+    public function agents()
+    {
+        return $this->belongsToMany(Agent::class, 'agent_type_reclamation');
+    }
+
 }
