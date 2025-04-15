@@ -66,6 +66,9 @@
             color: white;
         }
 
+        #reponse {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -99,9 +102,10 @@
     @if(auth()->check())
         <p class="text-center user">{{ auth()->user()->nom }}</p>
     @endif
-        <ul class="nav flex-column">
-            <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
+    <ul class="nav flex-column">
+            <li class="nav-item" id="list1"><a href="{{ route('dashboard') }}" class="nav-link text-dark">Accueil</a></li>
             <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>
+            <li class="nav-item" id="list2"><a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">Ajouter Réclamation</a></li>
         </ul>
     </div>
 
@@ -134,9 +138,10 @@
                     <div class="details bg-light p-3">
                     <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
                     <hr>
-                    <h4 class="">Description :</h4><hr>
-                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
-                    
+                    <h4 class="">Date de réponse :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->date_update }}</span></h4>
+                    <hr>
+                    <h4 class="">Réponse :</h4><hr>
+                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->reponse }}</span>
                     </div>
                 </div>
 
@@ -168,7 +173,6 @@
             }
         });
 
-
         function switchTab(tabId, btn) {
             // Cacher tous les contenus
             document.getElementById('reclamation').style.display = 'none';
@@ -184,6 +188,13 @@
             // Ajouter la classe active au bouton cliqué
             btn.classList.add('active');
         }
+
+        // Au chargement de la page, afficher le contenu de la réclamation par défaut
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('reclamation').style.display = 'block';
+            document.getElementById('reponse').style.display = 'none';
+            document.getElementById('btnContenu').classList.add('active');
+        });
     </script>
 </body>
 </html>

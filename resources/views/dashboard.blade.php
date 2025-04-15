@@ -91,40 +91,43 @@
         </ul>
     </div>
     <div id="content">
-
-    <div class="container">
-    <h4>Mon Tableau de Bord</h4>
-    <hr>
-    <div class="row">
-        <div class="col-md-4 mb-2">
-            <div class="card bg-white" id="card">
-                <div class="card-body text-dark">
-                    <h5 class="card-title "><i class="fa-solid fa-bars-progress"></i></i> Réclamations en cours</h5>
-                    <p class="card-text">{{ $enCours }}</p>
+        <div class="container">
+            <h4>Mon Tableau de Bord</h4>
+            <hr>
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <div class="card bg-white" id="card">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title "><i class="fa-solid fa-bars-progress"></i></i> Réclamations en cours</h5>
+                            <p class="card-text">{{ $enCours }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <div class="card bg-white" id="card">
+                        <div class="card-body text-dark">
+                            
+                            <h5 class="card-title"><i class="fa-solid fa-square-check"></i> Réclamations clôturées</h5>
+                            <p class="card-text">{{ $cloturees }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <div class="card bg-white" id="card">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title"> <i class="fa-solid fa-envelope"></i> Mes Réclamations</h5>
+                            <p class="card-text">{{ $total }}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-2">
-            <div class="card bg-white" id="card">
-                <div class="card-body text-dark">
-                    
-                    <h5 class="card-title"><i class="fa-solid fa-square-check"></i> Réclamations clôturées</h5>
-                    <p class="card-text">{{ $cloturees }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-2">
-            <div class="card bg-white" id="card">
-                <div class="card-body text-dark">
-                    <h5 class="card-title"> <i class="fa-solid fa-envelope"></i> Mes Réclamations</h5>
-                    <p class="card-text">{{ $total }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
     </div>
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {

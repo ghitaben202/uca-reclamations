@@ -61,9 +61,8 @@ Route::get('/reclamations/data', [ReclamationController::class, 'getData'])->nam
 Route::get('/reclamation/{id}', [ReclamationController::class, 'show'])->name('reclamations.details');
 
 
-Route::get('/reclamations/ajouter',function () {
-    return view('reclamations.ajouterReclamation');
-})->name('reclamations.ajouterReclamation');
+Route::get('/reclamations/ajouter', [ReclamationController::class, 'create'])->name('reclamations.ajouterReclamation');
+Route::post('/reclamations', [ReclamationController::class, 'store'])->name('reclamations.store');
 
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
