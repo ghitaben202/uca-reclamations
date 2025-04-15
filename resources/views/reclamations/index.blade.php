@@ -99,6 +99,8 @@
     <div class="container">
         <h4>Mes Réclamations</h4>
         <hr>
+        <div class="d-flex justify-content-end mb-2"><a href="{{ route('reclamations.ajouterReclamation')}}" class="btn btn-success ">Ajouter une reclamation +</a></div>
+        <div class="bg-light p-3">
         <table id="reclamationsTable" class="table table-bordered">
             <thead>
                 <tr>
@@ -117,12 +119,13 @@
                         <td>{{ $reclamation->statut }}</td>
                         <td>{{ $reclamation->date_creation }}</td>
                         <td>
-                        <a href="{{ route('reclamations.details', $reclamation->id) }}" class="btn btn-info">Voir les détails</a>
+                        <a href="{{ route('reclamations.details', $reclamation->id) }}" class="btn btn-warning">Voir les détails</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+    </div>    
     </div>
 
 

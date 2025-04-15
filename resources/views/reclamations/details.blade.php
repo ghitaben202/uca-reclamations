@@ -52,9 +52,20 @@
         #toggleSidebar{
            background-color:rgba(234, 213, 192, 0.4);
         }
-        .user{
-            
+        .tab {
+            display: inline-block;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            background-color: #f1f1f1;
+            color: black;
         }
+
+        .active {
+            background-color: #1e3a64; /* Bleu foncé */
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -100,29 +111,45 @@
         <div class="container">
             <h4>Détails de la Réclamation</h4>
             <hr>
+
+            <div class="d-flex justify-content-end m-3">
+                <button class="tab active d-inline" id="btnContenu" onclick="switchTab('reclamation', this)">Contenu</button>
+                <button class="tab d-inline" id="btnReponse" onclick="switchTab('reponse', this)">Réponses</button>
+            </div>
+
+
             <div class="row px-2">
 
-                <div class="col-md-8 ">
+                <div class="col-md-8" id="reclamation">
                     <div class="details bg-light p-3">
-                    <h4 class="">Titre :<span style="font-size:14px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
+                    <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
                     <hr>
                     <h4 class="">Description :</h4><hr>
-                    <span style="font-size:14px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
+                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
+                    
+                    </div>
+                </div>
+
+                <div class="col-md-8" id="reponse">
+                    <div class="details bg-light p-3">
+                    <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
+                    <hr>
+                    <h4 class="">Description :</h4><hr>
+                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
                     
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="infos bg-light p-3">
-                    <p class="">Statut:<span style="font-size:14px; margin-left:10px; padding:5px 5px; color: #6f6d72;">{{ $reclamation->titre }}</span></p>
+                    <p class="">Statut :<span style="font-size:16px; margin-left:10px; padding:5px 5px; color:rgb(255, 255, 255);" class="btn btn-warning">{{ $reclamation->statut }}</span></p>
                     <hr>
-                    <p class="">Date de soumission:
-                    <span style="font-size:14px; margin-left:10px; color: #6f6d72;">{{ $reclamation->date_creation}}</span>
+                    <p class="">Date de soumission :
+                    <span style="font-size:14px; margin-left:10px; color:rgb(109, 114, 109);">{{ $reclamation->date_creation}}</span>
                     </p>
                     <hr>
-                    <p class="">Catégorie:<span style="font-size:14px; margin-left:10px; padding:5px 5px; color: #6f6d72;">{{ $reclamation->typeReclamation->nom ?? 'Non spécifié' }}
+                    <p class="">Catégorie :<span style="font-size:16px; margin-left:10px; padding:5px 5px; color: #6f6d72;">{{ $reclamation->typeReclamation->nom ?? 'Non spécifié' }}
                     </span></p>
-                    <hr>
                 </div>
             </div>
         
@@ -140,6 +167,23 @@
                 content.style.marginLeft = '0';
             }
         });
+
+
+        function switchTab(tabId, btn) {
+            // Cacher tous les contenus
+            document.getElementById('reclamation').style.display = 'none';
+            document.getElementById('reponse').style.display = 'none';
+
+            // Afficher le contenu correspondant
+            document.getElementById(tabId).style.display = 'block';
+
+            // Retirer la classe active des boutons
+            document.getElementById('btnContenu').classList.remove('active');
+            document.getElementById('btnReponse').classList.remove('active');
+
+            // Ajouter la classe active au bouton cliqué
+            btn.classList.add('active');
+        }
     </script>
 </body>
 </html>

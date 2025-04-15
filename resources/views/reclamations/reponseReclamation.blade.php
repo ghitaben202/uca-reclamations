@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -21,17 +17,14 @@
         }
         #sidebar {
             width: 250px;
-            min-height: 140vh; 
-            position: absolute;
-            left:0;
+            height: 100vh;
+            position: fixed;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
-            overflow-y: auto;
         }
         #content {
             margin-left: 250px;
             padding: 20px;
-            flex-grow: 1;
         }
         #navb{
             background:rgba(156, 109, 50, 0.83);
@@ -57,14 +50,16 @@
             color:black;
         }
         #toggleSidebar{
-         background-color:rgba(234, 213, 192, 0.4);
+           background-color:rgba(234, 213, 192, 0.4);
         }
-        p{
-            color:rgba(156, 109, 50, 0.83);
+        .user{
+            
         }
     </style>
 </head>
 <body>
+
+    <!--NAVBAR-->
     <nav class="navbar navbar-expand-lg navbar-light" id="navb">
         <div class="container-fluid">
             <button class="btn" id="toggleSidebar">☰</button>
@@ -77,7 +72,7 @@
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Déconnexion</a>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -87,64 +82,50 @@
             </div>
         </div>
     </nav>
+
+    <!--SIDEBAR-->
     <div id="sidebar" class=" text-dark p-3">
     @if(auth()->check())
-        <p class="text-center">{{ auth()->user()->nom }}</p>
+        <p class="text-center user">{{ auth()->user()->nom }}</p>
     @endif
         <ul class="nav flex-column">
-            <li class="nav-item" id="list1"><a href="{{ route('dashboard') }}" class="nav-link text-dark">Accueil</a></li>
+            <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
             <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>
-            <li class="nav-item" id="list2"><a href="#" class="nav-link text-dark">Ajouter Réclamation</a></li>
         </ul>
     </div>
+
+
+    <!--CONTENT-->
     <div id="content">
+        <div class="container">
+            <h4>Détails de la Réclamation</h4>
+            <hr>
+            <div class="row px-2">
 
-    <div class="container">
-        <h4>Ajouter une Réclamation</h4>
-        <hr>
-        <form method="POST" action="">
-            @csrf
-            <div class="mb-3">
-                <label for="titre" class="form-label">Titre de réclamation</label>
-                <input type="text" class="form-control" name="titre" required>
-            </div>
-            <div class="mb-3">
-                <label for="role" class="form-label">Catégorie du réclamant</label>
-                <select id="role" name="role" class="form-control">
-                    <option value="">Sélectionnez une catégorie</option>
-                    <option value="etudiant">Étudiant</option>
-                    <option value="enseignant">Enseignant</option>
-                    <option value="doctorant">Doctorant</option>
-                </select>
-            </div>
-            <!-- Champs pour Étudiant -->
-            <div id="etudiant-fields" class="role-fields" style="display: none;">
-                <div class="mb-3">
-                    <label for="nom" class="form-label">Nom</label>
-                    <input type="text" class="form-control" name="nom">
+                <div class="col-md-8 ">
+                    <div class="details bg-light p-3">
+                    <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
+                    <hr>
+                    <h4 class="">Description :</h4><hr>
+                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
+                    
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="prenom" class="form-label">Prénom</label>
-                    <input type="text" class="form-control" name="prenom">
-                </div>
-                <div class="mb-3">
-                    <label for="email_personnel" class="form-label">Email personnel</label>
-                    <input type="email" class="form-control" name="email_personnel">
-                </div>
-                <div class="mb-3">
-                    <label for="cne" class="form-label">CNE</label>
-                    <input type="text" class="form-control" name="cne">
-                </div>
-                <div class="mb-3">
-                    <label for="telephone" class="form-label">Téléphone</label>
-                    <input type="text" class="form-control" name="telephone">
-                </div>
-            </div>
 
-            <button type="submit" class="btn btn-warning">Soumettre</button>
-        </form>
+                <div class="col-md-4">
+                    <div class="infos bg-light p-3">
+                    <p class="">Statut :<span style="font-size:16px; margin-left:10px; padding:5px 5px; color:rgb(255, 255, 255);" class="btn btn-warning">{{ $reclamation->statut }}</span></p>
+                    <hr>
+                    <p class="">Date de soumission :
+                    <span style="font-size:14px; margin-left:10px; color:rgb(109, 114, 109);">{{ $reclamation->date_creation}}</span>
+                    </p>
+                    <hr>
+                    <p class="">Catégorie :<span style="font-size:16px; margin-left:10px; padding:5px 5px; color: #6f6d72;">{{ $reclamation->typeReclamation->nom ?? 'Non spécifié' }}
+                    </span></p>
+                </div>
+            </div>
         
-    </div>
+        </div>
     </div>
     <script>
         document.getElementById('toggleSidebar').addEventListener('click', function() {
@@ -157,15 +138,6 @@
                 sidebar.style.display = 'none';
                 content.style.marginLeft = '0';
             }
-        });
-        document.getElementById('role').addEventListener('change', function() {
-        let selectedRole = this.value;
-        document.querySelectorAll('.role-fields').forEach(fieldset => fieldset.style.display = 'none');
-
-        if (selectedRole === 'etudiant') {
-            document.getElementById('etudiant-fields').style.display = 'block';
-        }
-        // Ajouter ici l'affichage pour enseignant et doctorant
         });
     </script>
 </body>
