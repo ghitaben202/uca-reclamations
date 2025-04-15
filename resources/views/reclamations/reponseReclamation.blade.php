@@ -52,22 +52,8 @@
         #toggleSidebar{
            background-color:rgba(234, 213, 192, 0.4);
         }
-        .tab {
-            display: inline-block;
-            padding: 10px 20px;
-            cursor: pointer;
-            border: none;
-            background-color: #f1f1f1;
-            color: black;
-        }
-
-        .active {
-            background-color: #1e3a64; /* Bleu foncé */
-            color: white;
-        }
-
-        #reponse {
-            display: none;
+        .user{
+            
         }
     </style>
 </head>
@@ -102,10 +88,9 @@
     @if(auth()->check())
         <p class="text-center user">{{ auth()->user()->nom }}</p>
     @endif
-    <ul class="nav flex-column">
-            <li class="nav-item" id="list1"><a href="{{ route('dashboard') }}" class="nav-link text-dark">Accueil</a></li>
+        <ul class="nav flex-column">
+            <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
             <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>
-            <li class="nav-item" id="list2"><a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">Ajouter Réclamation</a></li>
         </ul>
     </div>
 
@@ -115,33 +100,15 @@
         <div class="container">
             <h4>Détails de la Réclamation</h4>
             <hr>
-
-            <div class="d-flex justify-content-end m-3">
-                <button class="tab active d-inline" id="btnContenu" onclick="switchTab('reclamation', this)">Contenu</button>
-                <button class="tab d-inline" id="btnReponse" onclick="switchTab('reponse', this)">Réponses</button>
-            </div>
-
-
             <div class="row px-2">
 
-                <div class="col-md-8" id="reclamation">
+                <div class="col-md-8 ">
                     <div class="details bg-light p-3">
                     <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
                     <hr>
                     <h4 class="">Description :</h4><hr>
                     <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
                     
-                    </div>
-                </div>
-
-                <div class="col-md-8" id="reponse">
-                    <div class="details bg-light p-3">
-                    <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
-                    <hr>
-                    <h4 class="">Date de réponse :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->date_update }}</span></h4>
-                    <hr>
-                    <h4 class="">Réponse :</h4><hr>
-                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->reponse }}</span>
                     </div>
                 </div>
 
@@ -171,29 +138,6 @@
                 sidebar.style.display = 'none';
                 content.style.marginLeft = '0';
             }
-        });
-
-        function switchTab(tabId, btn) {
-            // Cacher tous les contenus
-            document.getElementById('reclamation').style.display = 'none';
-            document.getElementById('reponse').style.display = 'none';
-
-            // Afficher le contenu correspondant
-            document.getElementById(tabId).style.display = 'block';
-
-            // Retirer la classe active des boutons
-            document.getElementById('btnContenu').classList.remove('active');
-            document.getElementById('btnReponse').classList.remove('active');
-
-            // Ajouter la classe active au bouton cliqué
-            btn.classList.add('active');
-        }
-
-        // Au chargement de la page, afficher le contenu de la réclamation par défaut
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('reclamation').style.display = 'block';
-            document.getElementById('reponse').style.display = 'none';
-            document.getElementById('btnContenu').classList.add('active');
         });
     </script>
 </body>
