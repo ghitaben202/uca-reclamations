@@ -50,4 +50,34 @@ class AgentReclamationController extends Controller
 
         return redirect()->back()->with('success', 'Statut de la réclamation mis à jour avec succès');
     }
+
+    public function reponse(Request $request, Reclamation $reclamation)
+    {
+        // Vérifier que la réclamation appartient au type de l'agent
+        $agent = Auth::guard('agent')->user();
+        if ($reclamation->type_reclamations_id !== $agent->type_reclamations_id) {
+            abort(403, 'Accès non autorisé à cette réclamation.');
+        }
+
+        // Vérifier que la réclamation est en cours
+        if ($reclamation->statut !== 'en cours') {
+            return redirect()->back()->with('error', 'Cette réclamation ne peut plus être modifiée.');
+        }
+
+        $request->validate([
+            'reponse' => 'required|string|min:10',
+            'statut' => 'required|in:clôturée,rejetée'
+        ]);
+
+        try {
+            $reclamation->reponse = $request->reponse;
+            $reclamation->statut = $request->statut;
+            $reclamation->date_update = now();
+            $reclamation->save();
+
+            return redirect()->back()->with('success', 'Réponse envoyée et statut mis à jour avec succès.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'enregistrement de la réponse.');
+        }
+    }
 } 

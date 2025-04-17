@@ -40,7 +40,7 @@
                         @foreach($reclamations as $reclamation)
                         <tr>
                             <td>{{ $reclamation->id }}</td>
-                            <td>{{ $reclamation->sujet }}</td>
+                            <td>{{ $reclamation->titre }}</td>
                             <td>
                                 <span class="badge 
                                     @if($reclamation->statut == 'en cours') bg-warning

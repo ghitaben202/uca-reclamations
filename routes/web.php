@@ -84,17 +84,17 @@ Route::get('/agent/login', function () {
 Route::post('/agent/login', [AgentAuthController::class, 'login'])->name('agent.login');
 Route::post('/agent/logout', [AgentAuthController::class, 'logout'])->name('agent.logout');
 
-Route::middleware(['auth:agent'])->group(function () {
-    Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
+Route::middleware(['auth:agent'])->prefix('agent')->name('agent.')->group(function () {
+    Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [AgentProfileController::class, 'edit'])->name('profile');
+    Route::get('/profile/edit', [AgentProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [AgentProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [AgentProfileController::class, 'password'])->name('profile.password');
     
     // Routes pour les réclamations
-    Route::get('/agent/reclamations', [AgentReclamationController::class, 'index'])->name('agent.reclamations.index');
-    Route::get('/agent/reclamations/{reclamation}', [AgentReclamationController::class, 'show'])->name('agent.reclamations.show');
-    Route::put('/agent/reclamations/{reclamation}/status', [AgentReclamationController::class, 'updateStatus'])->name('agent.reclamations.update-status');
-    
-    // Routes pour le profil
-    Route::get('/agent/profile', [AgentProfileController::class, 'index'])->name('agent.profile');
-    Route::put('/agent/profile', [AgentProfileController::class, 'update'])->name('agent.profile.update');
+    Route::get('/reclamations', [AgentReclamationController::class, 'index'])->name('reclamations.index');
+    Route::get('/reclamations/{reclamation}', [AgentReclamationController::class, 'show'])->name('reclamations.show');
+    Route::post('/reclamations/{reclamation}/reponse', [AgentReclamationController::class, 'reponse'])->name('reclamations.reponse');
 });
 
 // Routes générées automatiquement pour l'authentification
