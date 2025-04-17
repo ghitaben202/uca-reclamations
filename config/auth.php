@@ -39,7 +39,11 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'utilisateurs',
+            'provider' => 'users',
+        ],
+        'agent' => [
+            'driver' => 'session',
+            'provider' => 'agents',
         ],
     ],
 
@@ -61,9 +65,13 @@ return [
     */
 
     'providers' => [
-        'utilisateurs' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Utilisateur::class,
+            'model' => App\Models\User::class,
+        ],
+        'agents' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Agent::class,
         ],
 
         // 'users' => [

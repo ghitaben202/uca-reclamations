@@ -7,6 +7,11 @@ use App\Models\Utilisateur;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReclamationController;
+use App\Http\Controllers\AgentAuthController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\AgentDashboardController;
+use App\Http\Controllers\AgentReclamationController;
+use App\Http\Controllers\AgentProfileController;
 
 
 /*
@@ -71,8 +76,31 @@ Route::get('/reclamations/ajouter', [ReclamationController::class, 'create'])
 Route::post('/reclamations/get-fields', [ReclamationController::class, 'getFields'])
 ->name('reclamations.getFields');
 
+// Routes pour l'authentification des agents
+Route::get('/agent/login', function () {
+    return view('auth.agent-login');
+})->name('agent.login');
+
+Route::post('/agent/login', [AgentAuthController::class, 'login'])->name('agent.login');
+Route::post('/agent/logout', [AgentAuthController::class, 'logout'])->name('agent.logout');
+
+Route::middleware(['auth:agent'])->group(function () {
+    Route::get('/agent/dashboard', [AgentDashboardController::class, 'index'])->name('agent.dashboard');
+    
+    // Routes pour les réclamations
+    Route::get('/agent/reclamations', [AgentReclamationController::class, 'index'])->name('agent.reclamations.index');
+    Route::get('/agent/reclamations/{reclamation}', [AgentReclamationController::class, 'show'])->name('agent.reclamations.show');
+    Route::put('/agent/reclamations/{reclamation}/status', [AgentReclamationController::class, 'updateStatus'])->name('agent.reclamations.update-status');
+    
+    // Routes pour le profil
+    Route::get('/agent/profile', [AgentProfileController::class, 'index'])->name('agent.profile');
+    Route::put('/agent/profile', [AgentProfileController::class, 'update'])->name('agent.profile.update');
+});
+
 // Routes générées automatiquement pour l'authentification
 require __DIR__.'/auth.php';
+
+Route::get('/test/create-agent', [TestController::class, 'createTestAgent']);
 
 
 
