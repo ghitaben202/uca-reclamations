@@ -17,8 +17,8 @@
         }
         #sidebar {
             width: 250px;
-            height: 100vh;
-            position: fixed;
+            height: 250vh;
+            position: absolute;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
         }

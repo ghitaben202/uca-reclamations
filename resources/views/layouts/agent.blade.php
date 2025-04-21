@@ -5,148 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agent - Tableau de Bord</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
-            color: white;
+        body {
+            background: rgba(229, 221, 208, 0.5);
+            font-family: 'Open Sans', Tahoma, sans-serif;
+            font-size: 16px;
         }
-        .sidebar .nav-link {
-            color: rgba(255,255,255,.75);
+
+        #sidebar {
+            width: 250px;
+            height: 180vh;
+            position: absolute;
+            background-color: rgba(229, 221, 208, 0.5);
+            padding-top: 20px;
         }
-        .sidebar .nav-link:hover {
-            color: white;
-            background-color: rgba(255,255,255,.1);
-        }
-        .sidebar .nav-link.active {
-            color: white;
-            background-color: rgba(255,255,255,.1);
-        }
-        .main-content {
+
+        #content {
             margin-left: 250px;
+            padding: 20px;
         }
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                width: 250px;
-                z-index: 1000;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease-in-out;
-            }
-            .sidebar.show {
-                transform: translateX(0);
-            }
-            .main-content {
-                margin-left: 0;
-            }
-            .overlay {
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0,0,0,0.5);
-                z-index: 999;
-            }
-            .overlay.show {
-                display: block;
-            }
+
+        #navb {
+            background: rgba(156, 109, 50, 0.83);
         }
+
+        .nav-link {
+            color: black;
+            border-bottom: 1px solid gray;
+            padding: 12px 20px;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(234, 213, 192, 0.4);
+            color: black;
+        }
+
+        .card-custom {
+            border: 6px solid;
+            border-color: white white white rgba(156, 109, 50, 0.83);
+            background-color: white;
+        }
+
+        h4, h5, p {
+            color: rgba(156, 109, 50, 0.83);
+        }
+
+        #btn-user, #toggleSidebar {
+            background-color: rgba(234, 213, 192, 0.4);
+            color: black;
+        }
+
+        
+    
     </style>
 </head>
 <body>
-    <div class="wrapper d-flex">
-        <!-- Sidebar -->
-        <nav class="sidebar">
-            <div class="p-3 border-bottom">
-                <h4 class="mb-0">Agent Panel</h4>
+   
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light" id="navb">
+            <div class="container-fluid">
+                <button class="btn" id="toggleSidebar">☰</button>
+                <div class="ms-auto dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
+                        <i class="fa-solid fa-user"></i> {{ Auth::guard('agent')->user()->nom }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Déconnexion</a>
+                        </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </ul>
+                </div>
             </div>
+        </nav>
+        <!-- Sidebar -->
+        <div id="sidebar" class="text-dark p-3">
+            @if(auth()->check())
+                <h5 class="text-center f-bold">{{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}</h5>
+            @endif
             <ul class="nav flex-column">
-                <li class="nav-item">
+                <li class="nav-item" id="list1">
                     <a href="{{ route('agent.dashboard') }}" class="nav-link {{ request()->routeIs('agent.dashboard') ? 'active' : '' }}">
                         <i class="fas fa-home me-2"></i> Tableau de Bord
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="list2">
                     <a href="{{ route('agent.reclamations.index') }}" class="nav-link {{ request()->routeIs('agent.reclamations.*') ? 'active' : '' }}">
                         <i class="fas fa-folder-open me-2"></i> Réclamations
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="list2">
                     <a href="{{ route('agent.profile') }}" class="nav-link {{ request()->routeIs('agent.profile') ? 'active' : '' }}">
                         <i class="fas fa-user-cog me-2"></i> Mon Profil
                     </a>
                 </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('agent.logout') }}">
-                        @csrf
-                        <button type="submit" class="nav-link w-100 text-start border-0 bg-transparent">
-                            <i class="fas fa-sign-out-alt me-2"></i> Déconnexion
-                        </button>
-                    </form>
-                </li>
             </ul>
-        </nav>
+        </div>
 
         <!-- Overlay for mobile -->
-        <div class="overlay"></div>
+        <div class="overlay" id="sidebarOverlay"></div>
 
-        <!-- Main content -->
-        <div class="main-content flex-grow-1">
-            <!-- Header -->
-            <header class="bg-white shadow-sm p-3">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-link d-md-none" id="sidebarToggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <h5 class="mb-0 ms-2">Bienvenue, {{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}</h5>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-user-circle me-2 text-secondary"></i>
-                        <span class="text-muted">{{ Auth::guard('agent')->user()->email }}</span>
-                    </div>
-                </div>
-            </header>
+        <!-- Content -->
+        <div id="content">
 
-            <!-- Page content -->
-            <main class="p-4">
+            <main>
                 @yield('content')
             </main>
         </div>
-    </div>
+    
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebar = document.querySelector('.sidebar');
-            const overlay = document.querySelector('.overlay');
-            const sidebarToggle = document.getElementById('sidebarToggle');
-
-            // Toggle sidebar on mobile
-            sidebarToggle.addEventListener('click', function() {
-                sidebar.classList.toggle('show');
-                overlay.classList.toggle('show');
-            });
-
-            // Close sidebar when clicking overlay
-            overlay.addEventListener('click', function() {
-                sidebar.classList.remove('show');
-                overlay.classList.remove('show');
-            });
-
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth < 768 && 
-                    !sidebar.contains(e.target) && 
-                    !sidebarToggle.contains(e.target) &&
-                    sidebar.classList.contains('show')) {
-                    sidebar.classList.remove('show');
-                    overlay.classList.remove('show');
-                }
-            });
+         document.getElementById('toggleSidebar').addEventListener('click', function() {
+            let sidebar = document.getElementById('sidebar');
+            let content = document.getElementById('content');
+            if (sidebar.style.display === 'none') {
+                sidebar.style.display = 'block';
+                content.style.marginLeft = '250px';
+            } else {
+                sidebar.style.display = 'none';
+                content.style.marginLeft = '0';
+            }
         });
     </script>
 </body>

@@ -1,0 +1,132 @@
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.statistiques-box {
+    /*background-color: #fff;*/
+    border-radius: 10px;
+    padding: 30px;
+    /*box-shadow: 0 4px 8px rgba(0,0,0,0.1);*/
+}
+
+.titre {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.statistiques-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-left: 6px solid;
+    border-radius: 8px;
+}
+
+.icon-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.label {
+    font-size: 14px;
+    color: #666;
+}
+
+.value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Couleurs */
+.border-blue { border-color: #3B82F6; }
+.bg-blue { background-color: #DBEAFE; }
+.text-blue { color: #3B82F6; }
+
+.border-yellow { border-color: #FACC15; }
+.bg-yellow { background-color: #FEF9C3; }
+.text-yellow { color: #FACC15; }
+
+.border-green { border-color: #22C55E; }
+.bg-green { background-color: #DCFCE7; }
+.text-green { color: #22C55E; }
+
+.border-red { border-color: #EF4444; }
+.bg-red { background-color: #FEE2E2; }
+.text-red { color: #EF4444; }
+
+/* Tableau */
+.table-wrapper {
+    margin-top: 30px;
+    overflow-x: auto;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.styled-table th, .styled-table td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: left;
+}
+
+.styled-table thead {
+    background-color: #f3f4f6;
+    font-weight: bold;
+    color: #444;
+}
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.badge.en\ cours {
+    background-color: #FEF9C3;
+    color: #92400E;
+}
+
+.badge.clôturée {
+background-color: #DCFCE7;
+color: #065F46;
+}
+
+.badge.rejetée {
+background-color: #FEE2E2;
+color: #991B1B;
+}
+
+.voir-lien {
+color: #2563EB;
+text-decoration: none;
+}
+
+.voir-lien:hover {
+text-decoration: underline;
+}
+
+.text-center {
+text-align: center;
+}
+
+
