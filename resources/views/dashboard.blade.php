@@ -82,7 +82,7 @@
     </nav>
     <div id="sidebar" class=" text-dark p-3">
     @if(auth()->check())
-        <p class="text-center">{{ auth()->user()->nom }}</p>
+        <h5 class="text-center fw-bold">{{ auth()->user()->nom }}</h5>
     @endif
         <ul class="nav flex-column">
             <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>

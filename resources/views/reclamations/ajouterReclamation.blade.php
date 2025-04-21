@@ -121,9 +121,9 @@
                     @endforeach
                 </select>
             </div>
-            <div id="fields-container"></div><br>
+            <div id="fields-container"></div>
 
-            <button type="submit" class="btn btn-warning">Soumettre</button>
+            <button type="submit" class="btn btn-warning">Ajouter Réclamation</button>
         </form>
         
     </div>

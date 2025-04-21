@@ -1,46 +1,112 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600">
-        {{ __('Connexion Agent') }}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Agent</title>
+
+    <!-- Bootstrap & Google Fonts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: rgba(229, 221, 208, 0.5);
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .container-custom {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .card-custom1 {
+            padding: 13px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+        .card-custom {
+            padding: 50px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.6);
+            text-align: center;
+        }
+
+        .btn-custom {
+            background-color: rgb(172, 94, 5);
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: rgb(142, 79, 12);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+        }
+
+        .image-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container container-custom">
+        <div class="row w-100 d-flex justify-content-center align-items-center">
+            <!-- Image et titre -->
+            <div class="col-md-6">
+                <div class="card card-custom1 shadow w-100">
+                    <img src="{{ asset('images/logo.jpeg') }}" alt="Agent Login" class="img-fluid mb-3 d-block mx-auto" style="max-height: 150px; border: 3px solid rgba(172, 94, 5, 0.8); border-radius: 0px; box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);">
+                    <h5>Connexion réservée aux agents</h5>
+                    <h4 class="fw-bold">Connexion Agent</h4>
+                    <i class="fi fi-rr-user-lock fs-3"></i>
+                </div>
+            </div>
+            <!-- Formulaire -->
+            <div class="col-md-6">
+                <div class="card card-custom shadow w-100">
+                    @if (session('status'))
+                        <div class="alert alert-info">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('agent.login') }}">
+                        @csrf
+
+                        <div class="mb-3 text-start">
+                            <label for="username" class="form-label">Nom d'utilisateur</label>
+                            <input type="text" name="username" id="username" class="form-control @error('username') is-invalid @enderror" value="{{ old('username') }}" required autofocus autocomplete="username">
+                            @error('username')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="current-password">
+                            @error('password')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <button type="submit" class="btn btn-custom w-100">Se connecter</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('agent.login') }}">
-        @csrf
-
-        <!-- Nom d'utilisateur -->
-        <div>
-            <x-input-label for="username" :value="__('Nom d\'utilisateur')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('username')" class="mt-2" />
-        </div>
-
-        <!-- Mot de passe -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Mot de passe')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ml-2 text-sm text-gray-600">{{ __('Se souvenir de moi') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Mot de passe oublié ?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ml-3">
-                {{ __('Se connecter') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout> 
+    <footer class="text-center p-3">
+        © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
+    </footer>
+</body>
+</html>

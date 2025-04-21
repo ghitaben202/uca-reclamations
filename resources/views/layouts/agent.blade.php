@@ -57,9 +57,16 @@
             background-color: rgba(234, 213, 192, 0.4);
             color: black;
         }
+        .logout-link {
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-        
-    
+        .logout-link:hover {
+            background-color: rgba(156, 109, 50, 0.83); /* fond rouge au survol */
+            color: white;
+        }
+
     </style>
 </head>
 <body>
@@ -70,14 +77,14 @@
                 <button class="btn" id="toggleSidebar">☰</button>
                 <div class="ms-auto dropdown">
                     <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
-                        <i class="fa-solid fa-user"></i> {{ Auth::guard('agent')->user()->nom }}
+                        <i class="fa-solid fa-user"></i> {{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ route('logout') }}"
+                        <li><a class="dropdown-item logout-link" href="{{ route('agent.logout')  }}"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Déconnexion</a>
+                            <i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a>
                         </li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('agent.logout')  }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </ul>
@@ -86,9 +93,6 @@
         </nav>
         <!-- Sidebar -->
         <div id="sidebar" class="text-dark p-3">
-            @if(auth()->check())
-                <h5 class="text-center f-bold">{{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}</h5>
-            @endif
             <ul class="nav flex-column">
                 <li class="nav-item" id="list1">
                     <a href="{{ route('agent.dashboard') }}" class="nav-link {{ request()->routeIs('agent.dashboard') ? 'active' : '' }}">

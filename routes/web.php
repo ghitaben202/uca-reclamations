@@ -45,7 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
+//Routes de user
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::post('/utilisateurs/store', [RegisteredUserController::class, 'store'])->name('utilisateurs.store');
 
 
@@ -64,12 +65,6 @@ Route::get('/login', function () {
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-//Agent
-Route::get('/dashboard-agent', [AgentController::class, 'dashboard'])->name('agent.dashboardAgent');
-
-
-
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Reclamations
 Route::get('/reclamations', [DashboardController::class, 'showReclamations'])->name('reclamations.index');

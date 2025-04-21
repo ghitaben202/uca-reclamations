@@ -84,6 +84,9 @@
     @if(auth()->check())
         <p class="text-center">{{ auth()->user()->nom }}</p>
     @endif
+    @if(auth()->check())
+        <h5 class="text-center fw-bold">{{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}</h5>
+    @endif
     <ul class="nav flex-column">
         <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
         <li class="nav-item" id="list2"><a href="#" class="nav-link text-dark">Réclamations à traiter</a></li>
