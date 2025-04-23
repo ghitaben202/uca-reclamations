@@ -57,6 +57,21 @@
             padding: 20px;
             border-radius: 10px;
         }
+        @media (max-width: 768px) {
+            .card-custom,
+            .card-custom1 {
+                padding: 20px;
+            }
+
+            .btn-custom {
+                width: 100%;
+                font-size: 16px;
+            }
+
+            .form-control {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>

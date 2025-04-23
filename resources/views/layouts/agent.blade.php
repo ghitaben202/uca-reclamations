@@ -66,6 +66,43 @@
             background-color: rgba(156, 109, 50, 0.83); /* fond rouge au survol */
             color: white;
         }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 10px;
+            }
+
+            #content {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .nav-link {
+                padding: 10px 15px;
+                font-size: 14px;
+            }
+
+            .card-custom {
+                padding: 15px;
+            }
+
+            h4, h5 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            #btn-user,
+            #toggleSidebar {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+        }
 
     </style>
 </head>
