@@ -11,50 +11,85 @@
 
     <style>
         body {
-            background: rgba(229, 221, 208, 0.5);
-            font-family: Tahoma, Verdana, sans-serif;
-            font-size:16px;
-        }
+    background: rgba(229, 221, 208, 0.5);
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 16px;
+    }
+
+     #sidebar {
+        width: 250px;
+        height: 180vh;
+        position: absolute;
+        background-color: rgba(229, 221, 208, 0.5);
+        padding-top: 20px;
+        transition: transform 0.3s ease;
+    }
+    #content {
+        margin-left: 250px;
+        padding: 20px;
+        transition: margin-left 0.3s ease;
+    }
+    #navb {
+        background: rgba(156, 109, 50, 0.83);
+    }#list1,
+    #list2 {
+        border-bottom: 1px solid gray;
+        padding: 10px;
+    }  
+    .nav-item a:hover {
+        background-color: rgba(234, 213, 192, 0.4);
+    }
+
+    #card {
+        border: 6px solid;
+        border-color: white white white rgba(156, 109, 50, 0.83);
+    }
+
+    #btn-user,
+    #toggleSidebar {
+        background-color: rgba(234, 213, 192, 0.4);
+        color: black;
+    } 
+    p {
+        color: rgba(156, 109, 50, 0.83);
+    }
+
+    .logout-link {
+        background-color: transparent;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .logout-link:hover {
+        background-color: rgba(156, 109, 50, 0.83);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
         #sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            background-color: rgba(229, 221, 208, 0.5);
-            padding-top: 20px;
+        position: absolute;
+        width: 200px;
+        z-index: 1000;
+        display: none; 
+        height: 100vh;
+        
+        }
+
+        #sidebar.active {
+        transform: translateX(0);
         }
         #content {
-            margin-left: 250px;
-            padding: 20px;
+        margin-left: 0;
         }
-        #navb{
-            background:rgba(156, 109, 50, 0.83);
+
+        #toggleSidebar {
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        cursor: pointer;
         }
-        #list1{
-            margin: 0;
-            border-top:1px solid gray;
-            border-bottom:1px solid gray;
-        }
-        #list2{
-            margin: 0;
-            border-bottom:1px solid gray;
-        }
-        .nav-item a:hover{
-            background-color:rgba(234, 213, 192, 0.4);
-        }
-        #card{
-            border:6px solid;
-            border-color:white white white rgba(156, 109, 50, 0.83);
-        }
-        #btn-user{
-            background-color:rgba(234, 213, 192, 0.4);
-            color:black;
-        }
-        #toggleSidebar{
-         background-color:rgba(234, 213, 192, 0.4);
-        }
-        p{
-            color:rgba(156, 109, 50, 0.83);
-        }
+    }
     </style>
 </head>
 <body>
@@ -69,7 +104,7 @@
                 </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                    <li><a class="dropdown-item logout-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         Déconnexion</a>
                     </li>
@@ -81,13 +116,22 @@
         </div>
     </nav>
     <div id="sidebar" class=" text-dark p-3">
-    @if(auth()->check())
-        <p class="text-center">{{ auth()->user()->nom }}</p>
-    @endif
         <ul class="nav flex-column">
-            <li class="nav-item" id="list1"><a href="#" class="nav-link text-dark">Accueil</a></li>
-            <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>
-            <li class="nav-item" id="list2"><a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">Ajouter Réclamation</a></li>
+            <li class="nav-item" id="list1">
+                <a href="#" class="nav-link text-dark">
+                    <i class="fa-solid fa-house" style="color: #0a0a0b;"></i> Accueil 
+                </a>
+            </li>
+            <li class="nav-item" id="list2">
+                <a href="{{ route('reclamations.index') }}" class="nav-link text-dark">
+                    <i class="fa-solid fa-folder-open" style="color: #0a0a0b;"></i> Mes Reclamations
+                </a>
+            </li>
+            <li class="nav-item" id="list2">
+                <a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">
+                    <i class="fa-solid fa-square-plus" style="color: #0a0a0b;"></i> Ajouter Réclamation
+                </a>
+            </li>
         </ul>
     </div>
     <div id="content">
@@ -141,6 +185,7 @@
                 content.style.marginLeft = '0';
             }
         });
+        
     </script>
 </body>
 </html>

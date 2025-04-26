@@ -29,15 +29,11 @@
         #navb{
             background:rgba(156, 109, 50, 0.83);
         }
-        #list1{
-            margin: 0;
-            border-top:1px solid gray;
-            border-bottom:1px solid gray;
-        }
-        #list2{
-            margin: 0;
-            border-bottom:1px solid gray;
-        }
+        #list1,
+        #list2 {
+            border-bottom: 1px solid gray;
+            padding: 10px;
+        }  
         .nav-item a:hover{
             background-color:rgba(234, 213, 192, 0.4);
         }
@@ -99,9 +95,6 @@
 
     <!--SIDEBAR-->
     <div id="sidebar" class=" text-dark p-3">
-    @if(auth()->check())
-        <p class="text-center user">{{ auth()->user()->nom }}</p>
-    @endif
     <ul class="nav flex-column">
             <li class="nav-item" id="list1"><a href="{{ route('dashboard') }}" class="nav-link text-dark">Accueil</a></li>
             <li class="nav-item" id="list2"><a href="{{ route('reclamations.index') }}" class="nav-link text-dark">Mes Reclamations</a></li>

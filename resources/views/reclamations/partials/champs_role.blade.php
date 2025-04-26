@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<p>Rôle sélectionné : {{ $role->nom }}</p>
 
 @if($role->nom === 'Etudiant')
     <div class="mb-3">
@@ -96,7 +95,7 @@
     </div>
     <div class="mb-3">
         <label for="contenu" class="form-label">Contenu</label>
-        <textarea name="contenu" cols="115" rows="5"></textarea>
+        <textarea name="contenu" class="form-control" placeholder="Écrivez votre réclamation ici..." required></textarea>
     </div>
 @else
     <p>Aucun type de réclamation disponible pour ce rôle.</p>

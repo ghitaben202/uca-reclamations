@@ -97,7 +97,7 @@
 
                         <div class="mb-3 text-start">
                             <label for="email_personnel" class="form-label fs-5">Email personnel</label>
-                            <input id="email_personnel" type="email" name="email_personnel" value="{{ old('email_personnel') }}" required class="form-control">
+                            <input id="email_personnel" type="text" name="email_personnel" value="{{ old('email_personnel') }}" class="form-control">
                         </div>
 
                         <div class="mb-3 text-start">

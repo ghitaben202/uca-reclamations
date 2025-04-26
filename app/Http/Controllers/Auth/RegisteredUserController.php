@@ -38,7 +38,7 @@ class RegisteredUserController extends Controller
         'nom' => ['required', 'string', 'max:255'],
         'prenom' => ['required', 'string', 'max:255'],
         'email_personnel' => ['required', 'string', 'email', 'max:255', 'unique:utilisateurs,email_personnel'],
-        'mot_de_passe' => ['required', 'string', 'min:8'], // Validation du mot de passe
+        'mot_de_passe' => ['required', 'string', 'min:8'] // Validation du mot de passe
     ]);
 
     // Création de l'utilisateur
