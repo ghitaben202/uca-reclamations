@@ -17,10 +17,13 @@
 
         #sidebar {
             width: 250px;
-            height: 180vh;
+            min-height: 250vh; 
             position: absolute;
+            left:0;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
         }
 
         #content {
@@ -68,42 +71,61 @@
         }
         @media (max-width: 768px) {
             #sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-                padding: 10px;
+                position: absolute;
+                width: 200px;
+                z-index: 1000;
+                display: none; 
+                height: 100vh;
+        
             }
 
+            #sidebar.active {
+                transform: translateX(0);
+            }
             #content {
                 margin-left: 0;
-                padding: 10px;
             }
 
-            .nav-link {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-
-            .card-custom {
-                padding: 15px;
-            }
-
-            h4, h5 {
-                font-size: 18px;
-            }
-
-            p {
-                font-size: 14px;
-            }
-
-            #btn-user,
             #toggleSidebar {
-                width: 100%;
-                margin-bottom: 10px;
-                font-size: 14px;
+                display: block;
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                z-index: 1000;
+                cursor: pointer;
             }
         }
-
+        @media (max-width: 768px) {
+            .card-header .btn-group {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            .card-header h5 {
+                font-size: 18px;
+            }
+            .table-responsive {
+                overflow-x: auto;
+            }
+            #reclamationsTable th,
+            #reclamationsTable td {
+                white-space: nowrap;
+            }
+            .dt-buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+            .dataTables_wrapper .dataTables_filter {
+                text-align: center;
+            }
+            .dataTables_wrapper .dataTables_filter input {
+                width: 100%;
+                max-width: 250px;
+                margin-top: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -162,7 +184,7 @@
     
 
     <script>
-         document.getElementById('toggleSidebar').addEventListener('click', function() {
+        document.getElementById('toggleSidebar').addEventListener('click', function() {
             let sidebar = document.getElementById('sidebar');
             let content = document.getElementById('content');
             if (sidebar.style.display === 'none') {
@@ -173,6 +195,7 @@
                 content.style.marginLeft = '0';
             }
         });
+    
     </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <div class="container-fluid">
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Liste des Réclamations</h6>
+            <h5 class="m-0 text-dark">Liste des Réclamations</h5>
             <div class="btn-group">
                 <a href="{{ route('agent.reclamations.index', ['statut' => 'all']) }}" 
                    class="btn btn-outline-primary {{ request('statut') == 'all' || !request('statut') ? 'active' : '' }}">

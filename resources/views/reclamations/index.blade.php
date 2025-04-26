@@ -33,15 +33,11 @@
         #navb{
             background:rgba(156, 109, 50, 0.83);
         }
-        #list1{
-            margin: 0;
-            border-top:1px solid gray;
-            border-bottom:1px solid gray;
-        }
-        #list2{
-            margin: 0;
-            border-bottom:1px solid gray;
-        }
+        #list1,
+        #list2 {
+            border-bottom: 1px solid gray;
+            padding: 10px;
+        }  
         .nav-item a:hover{
             background-color:rgba(234, 213, 192, 0.4);
         }
@@ -59,6 +55,47 @@
         p{
             color:rgba(156, 109, 50, 0.83);
         }
+        .logout-link {
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .logout-link:hover {
+            background-color: rgba(156, 109, 50, 0.83);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            #sidebar {
+                position: absolute;
+                width: 200px;
+                z-index: 1000;
+                display: none; 
+                height: 100vh;
+            }
+
+            #content {
+                margin-left: 0;
+            }
+
+            #toggleSidebar {
+                display: inline-block;
+            }
+
+    
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+   
+            h4, .btn {
+                font-size: 1rem;
+            }
+
+
+    }
+       
     </style>
 </head>
 <body>
@@ -73,9 +110,9 @@
                 </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                    <li><a class="dropdown-item logout-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Déconnexion</a>
+                           <i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a>
                     </li>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
@@ -85,13 +122,16 @@
         </div>
     </nav>
     <div id="sidebar" class=" text-dark p-3">
-    @if(auth()->check())
-        <p class="text-center">{{ auth()->user()->nom }}</p>
-    @endif
         <ul class="nav flex-column">
-            <li class="nav-item" id="list1"><a href="{{ route('dashboard') }}" class="nav-link text-dark">Accueil</a></li>
-            <li class="nav-item" id="list2"><a href="#" class="nav-link text-dark">Mes Reclamations</a></li>
-            <li class="nav-item" id="list2"><a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">Ajouter Réclamation</a></li>
+            <li class="nav-item" id="list1">
+                <a href="{{ route('dashboard') }}" class="nav-link text-dark">
+                <i class="fa-solid fa-house" style="color: #0a0a0b;"></i> Accueil</a></li>
+            <li class="nav-item" id="list2">
+                <a href="#" class="nav-link text-dark">
+                <i class="fa-solid fa-folder-open" style="color: #0a0a0b;"></i> Mes Reclamations</a></li>
+            <li class="nav-item" id="list2">
+                <a href="{{ route('reclamations.ajouterReclamation') }}" class="nav-link text-dark">
+                <i class="fa-solid fa-square-plus" style="color: #0a0a0b;"></i> Ajouter Réclamation</a></li>
         </ul>
     </div>
     <div id="content">
@@ -99,6 +139,8 @@
     <div class="container">
         <h4>Mes Réclamations</h4>
         <hr>
+        <div class="d-flex justify-content-end mb-2"><a href="{{ route('reclamations.ajouterReclamation')}}" class="btn btn-warning ">Ajouter une reclamation +</a></div>
+        <div class="bg-light p-3">
         <table id="reclamationsTable" class="table table-bordered">
             <thead>
                 <tr>
@@ -117,12 +159,13 @@
                         <td>{{ $reclamation->statut }}</td>
                         <td>{{ $reclamation->date_creation }}</td>
                         <td>
-                        <a href="{{ route('reclamations.details', $reclamation->id) }}" class="btn btn-info">Voir les détails</a>
+                        <a href="{{ route('reclamations.details', $reclamation->id) }}" class="btn btn-warning">Voir les détails</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+    </div>    
     </div>
 
 
@@ -140,7 +183,7 @@
                 content.style.marginLeft = '0';
             }
         });
-
+        
         $(document).ready(function() {
         $('#reclamationsTable').DataTable({
         "paging": true,      
