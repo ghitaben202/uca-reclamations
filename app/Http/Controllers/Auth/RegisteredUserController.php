@@ -58,8 +58,7 @@ class RegisteredUserController extends Controller
         'etablissement_id' => NULL,
     ]);
 
-    // Connexion de l'utilisateur
-    Auth::login($user);  // Assurez-vous que $user est de type Utilisateur qui étend Authenticatable
+   
 
     // Redirection vers la page appropriée après l'inscription
     return redirect()->route('login'); 
