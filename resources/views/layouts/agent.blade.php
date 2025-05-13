@@ -7,12 +7,38 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --font-title: 'Playfair Display', serif;
+            --font-text: 'Inter', sans-serif;
+        }
+
         body {
             background: rgba(229, 221, 208, 0.5);
-            font-family: 'Open Sans', Tahoma, sans-serif;
+            font-family: var(--font-text);
             font-size: 16px;
+        }
+
+        /* Styles pour les titres */
+        h1, h2, h3, h4, h5, h6, 
+        .card-header h5,
+        .nav-link,
+        .btn-user,
+        .dropdown-toggle {
+            font-family: var(--font-title);
+        }
+
+        /* Styles spécifiques pour les titres */
+        .card-header h5 {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Styles pour le texte */
+        p, label, input, textarea, select, 
+        .form-text, .alert, .table {
+            font-family: var(--font-text);
         }
 
         #sidebar {
@@ -39,6 +65,7 @@
             color: black;
             border-bottom: 1px solid gray;
             padding: 12px 20px;
+            font-weight: 500;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -59,16 +86,50 @@
         #btn-user, #toggleSidebar {
             background-color: rgba(234, 213, 192, 0.4);
             color: black;
+            font-weight: 500;
         }
+
         .logout-link {
             background-color: transparent;
             transition: background-color 0.3s, color 0.3s;
+            font-family: var(--font-text);
         }
 
         .logout-link:hover {
-            background-color: rgba(156, 109, 50, 0.83); /* fond rouge au survol */
+            background-color: rgba(156, 109, 50, 0.83);
             color: white;
         }
+
+        /* Styles pour les tableaux */
+        .table th {
+            font-family: var(--font-title);
+            font-weight: 600;
+        }
+
+        .table td {
+            font-family: var(--font-text);
+        }
+
+        /* Styles pour les boutons */
+        .btn {
+            font-family: var(--font-text);
+            font-weight: 500;
+        }
+
+        /* Styles pour les alertes */
+        .alert {
+            font-family: var(--font-text);
+        }
+
+        /* Styles pour les formulaires */
+        .form-label {
+            font-weight: 500;
+        }
+
+        .form-control {
+            font-family: var(--font-text);
+        }
+
         @media (max-width: 768px) {
             #sidebar {
                 position: absolute;
@@ -76,7 +137,6 @@
                 z-index: 1000;
                 display: none; 
                 height: 100vh;
-        
             }
 
             #sidebar.active {
@@ -133,10 +193,16 @@
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light" id="navb">
             <div class="container-fluid">
-                <button class="btn" id="toggleSidebar">☰</button>
+                <div class="d-flex align-items-center">
+                    <img src="{{ asset('images/logo.jpeg') }}" alt="Logo UCA" class="img-fluid" style="max-width: 60px; height: auto; cursor: pointer; border: 2px solid rgba(156, 109, 50, 0.83); border-radius: 8px; padding: 2px;" id="toggleSidebar">
+                    <div class="ms-3">
+                        <h5 class="mb-0 text-white" style="font-family: var(--font-title); font-size: 1.2rem;">UCA-Réclamations</h5>
+                        <small class="text-white" style="font-family: var(--font-text); opacity: 0.9;">Profil Agent</small>
+                    </div>
+                </div>
                 <div class="ms-auto dropdown">
-                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
-                        <i class="fa-solid fa-user"></i> {{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}
+                    <button class="btn dropdown-toggle text-white" type="button" data-bs-toggle="dropdown" id="btn-user" style="border: none;">
+                        <i class="fa-solid fa-user text-white"></i> {{ Auth::guard('agent')->user()->nom }} {{ Auth::guard('agent')->user()->prenom }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item logout-link" href="{{ route('agent.logout')  }}"
@@ -195,7 +261,8 @@
                 content.style.marginLeft = '0';
             }
         });
-    
     </script>
+
+    @yield('scripts')
 </body>
 </html>

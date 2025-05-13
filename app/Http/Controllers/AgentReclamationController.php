@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reclamation;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -79,5 +80,36 @@ class AgentReclamationController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Une erreur est survenue lors de l\'enregistrement de la réponse.');
         }
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'titre' => 'required|string|max:255',
+            'description' => 'required|string',
+            'categorie' => 'required|string',
+            'priorite' => 'required|in:basse,moyenne,haute',
+        ]);
+
+        $reclamation = Reclamation::create([
+            'titre' => $validated['titre'],
+            'description' => $validated['description'],
+            'categorie' => $validated['categorie'],
+            'priorite' => $validated['priorite'],
+            'statut' => 'en_attente',
+            'agent_id' => Auth::guard('agent')->id(),
+        ]);
+
+        // Créer une notification pour l'agent
+        Notification::create([
+            'agent_id' => Auth::guard('agent')->id(),
+            'reclamation_id' => $reclamation->id,
+            'type' => 'nouvelle_reclamation',
+            'message' => "Nouvelle réclamation créée : {$reclamation->titre}",
+            'lu' => false
+        ]);
+
+        return redirect()->route('reclamations.index')
+            ->with('success', 'Réclamation créée avec succès.');
     }
 } 

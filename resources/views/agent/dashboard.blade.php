@@ -55,7 +55,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Sujet</th>
+                                <th>Titre</th>
                                 <th>Statut</th>
                                 <th>Date</th>
                                 <th>Actions</th>
@@ -65,9 +65,17 @@
                         @forelse($recentReclamations as $reclamation)
                                 <tr>
                                     <td>{{ $reclamation->id }}</td>
-                                    <td>{{ $reclamation->sujet }}</td>
+                                    <td>{{ $reclamation->titre }}</td>
                                     <td>
-                                        <span class="badge {{ $reclamation->statut }}">
+                                        <span class="badge" style="
+                                            background-color: {{ $reclamation->statut === 'en cours' ? '#F5A86C' : 
+                                                ($reclamation->statut === 'clôturée' ? '#8ABF8E' : 
+                                                ($reclamation->statut === 'rejetée' ? '#E98B8B' : '#4A90A4')) }};
+                                            color: white;
+                                            padding: 8px 12px;
+                                            border-radius: 4px;
+                                            font-weight: 500;
+                                        ">
                                             {{ ucfirst($reclamation->statut) }}
                                         </span>
                                     </td>

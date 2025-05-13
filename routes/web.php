@@ -95,3 +95,7 @@ Route::get('/test/create-agent', [TestController::class, 'createTestAgent']);
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
