@@ -209,7 +209,7 @@
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a>
                         </li>
-                        <form id="logout-form" action="{{ route('agent.logout')  }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('agent.logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </ul>

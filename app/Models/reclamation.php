@@ -23,18 +23,11 @@ class Reclamation extends Model
     {
         return $this->belongsTo(Utilisateur::class, 'utilisateur_id');
     }
-
     public function typeReclamation()
     {
-
         return $this->belongsTo(typeReclamation::class, 'type_reclamation_id');
 
-        return $this->belongsTo(TypeReclamation::class, 'type_reclamation_id');
-
     }
-    
-
-
     public function agent()
     {
         return $this->belongsTo(Agent::class, 'agent_id');
