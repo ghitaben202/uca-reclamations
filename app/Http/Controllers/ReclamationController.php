@@ -8,6 +8,7 @@ use App\Models\typeReclamation;
 use App\Models\Etablissement;
 use App\Models\CentreEtude;
 use App\Models\Utilisateur;
+use Illuminate\Support\Facades\Auth;
 
 class ReclamationController extends Controller
 {
@@ -21,6 +22,9 @@ class ReclamationController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+        'role' => strtolower($request->input('role')),
+        ]);
         // Validation des champs communs
         $request->validate([
             'titre' => 'required|string|max:255',
@@ -33,7 +37,7 @@ class ReclamationController extends Controller
         switch ($request->role) {
             case 'etudiant':
                 $request->validate([
-                    'nom_etudiant' => ['required','string'],
+                    'nom_etudiant' => 'required|string|max:255',
                     'prenom_etudiant' => 'required|string|max:255',
                     'email_etudiant' => 'required|email',
                     'email_academique' => 'nullable|email|regex:/^[a-zA-Z0-9._%+-]+@uca\.ac\.ma$/',
@@ -87,21 +91,18 @@ class ReclamationController extends Controller
         $reclamation = new Reclamation();
         $reclamation->titre = $request->titre;
         $reclamation->description = $request->description;
-        $reclamation->role = $request->role;
         $reclamation->statut = 'en cours';
-        $reclamation->utilisateur_id = $utilisateur->id;
+        $reclamation->utilisateur_id = auth()->id();
         $reclamation->type_reclamations_id = $request->type_reclamation_id;
         $reclamation->save();
         // Retour vers la page du tableau de bord avec un message de succès
-        return redirect()->route('dashboard')->with('success', 'Votre réclamation a été soumise avec succès.');
+        return redirect()->route('reclamations.ajouterReclamation')->with('message' , 'Votre réclamation a été soumise avec succès.');
     }
 
     public function show($id)
     {
-        // Récupérer la réclamation par son ID
+        
         $reclamation = Reclamation::findOrFail($id);
-
-        // Retourner la vue avec les détails de la réclamation
         return view('reclamations.details', compact('reclamation'));
 
     }

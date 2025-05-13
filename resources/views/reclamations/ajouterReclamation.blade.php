@@ -136,8 +136,17 @@
 
     <div class="container">
         <h4>Ajouter une Réclamation</h4>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         <hr>
-        <form method="POST" action="{{ route('reclamations.store') }}">
+        <form method="POST" action="{{ route('reclamations.store') }}" >
             @csrf
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre de réclamation</label>
@@ -157,7 +166,10 @@
             </div>
             <div id="fields-container"></div>
 
-            <button type="submit" class="btn btn-warning">Ajouter une réclamation</button>
+            <button type="submit" class="btn btn-warning">Ajouter une réclamation</button><br>
+            @if(session('message'))
+                <div class="alert alert-success">{{ session('message') }}</div>
+            @endif
         </form>
         
     </div>
