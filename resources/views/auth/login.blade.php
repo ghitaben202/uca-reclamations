@@ -77,6 +77,19 @@
                 <div class="card card-custom shadow w-100">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div class="alert alert-danger">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                         <div class="mb-3">
                             <label for="email_personnel" class="form-label">Email</label>
                             <input type="email" name="email_personnel" id="email_personnel" class="form-control  @error('email_personnel') is-invalid @enderror" value="{{ old('email_personnel') }}" required autofocus>

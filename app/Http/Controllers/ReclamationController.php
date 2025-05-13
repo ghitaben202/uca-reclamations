@@ -94,6 +94,15 @@ class ReclamationController extends Controller
         $reclamation->statut = 'en cours';
         $reclamation->utilisateur_id = auth()->id();
         $reclamation->type_reclamations_id = $request->type_reclamation_id;
+        
+        // Récupérer l'agent_id à partir du type de réclamation
+        $typeReclamation = typeReclamation::with('agents')->findOrFail($request->type_reclamation_id);
+        if ($typeReclamation->agents->isNotEmpty()) {
+            $reclamation->agent_id = $typeReclamation->agents->first()->id;
+        } else {
+            return redirect()->back()->with('error', 'Aucun agent n\'est associé à ce type de réclamation.');
+        }
+        
         $reclamation->save();
         // Retour vers la page du tableau de bord avec un message de succès
         return redirect()->route('reclamations.ajouterReclamation')->with('message' , 'Votre réclamation a été soumise avec succès.');

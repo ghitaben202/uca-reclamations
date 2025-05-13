@@ -149,15 +149,15 @@
         <form method="POST" action="{{ route('reclamations.store') }}" >
             @csrf
             <div class="mb-3">
-                <label for="titre" class="form-label">Titre de réclamation</label>
+                <label for="titre" class="form-label">Titre de réclamation <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="titre" required>
             </div>
             <div class="mb-3">
-                <label for="role" class="form-label">Catégorie du réclamant</label>
+                <label for="role" class="form-label">Catégorie du réclamant <span class="text-danger">*</span></label>
                 <select id="role" name="role" class="form-control" hx-post="{{ route('reclamations.getFields') }}"
                 hx-trigger="change"
                 hx-target="#fields-container"
-                hx-swap="innerHTML">
+                hx-swap="innerHTML" required>
                     <option value="">Sélectionnez une catégorie</option>
                     @foreach($roles as $role)
                         <option value="{{ $role->nom }}">{{ $role->nom }}</option>

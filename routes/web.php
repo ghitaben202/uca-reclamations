@@ -29,7 +29,7 @@ use App\Http\Controllers\AgentProfileController;
 */
 
 // Authentification par défaut
-Auth::routes();
+// Auth::routes();
 
 // Page publique 
 Route::get('/', function () {
@@ -37,15 +37,11 @@ Route::get('/', function () {
 })->name('home');
 
 // Auth - Login / Register
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
 // Routes protégées par middleware "auth"
 Route::middleware('auth')->group(function () {
@@ -95,7 +91,5 @@ Route::get('/test/create-agent', [TestController::class, 'createTestAgent']);
 
 
 
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

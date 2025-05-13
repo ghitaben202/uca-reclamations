@@ -32,43 +32,58 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
-{
-    // Valider les entrées
-    $request->validate([
-        'nom' => ['required', 'string', 'max:255'],
-        'prenom' => ['required', 'string', 'max:255'],
-        'email_personnel' => ['required', 'string', 'email', 'max:255', 'unique:utilisateurs,email_personnel'],
-        'mot_de_passe' => ['required', 'string', 'min:8'], // Validation du mot de passe
-    ]);
+    {
+        try {
+            // Valider les entrées
+            $validated = $request->validate([
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'email_personnel' => 'required|string|email|max:255|unique:utilisateurs,email_personnel',
+                'mot_de_passe' => 'required|string|min:8',
+                'role_id' => 'required|exists:roles,id',
+            ], [
+                'nom.required' => 'Le nom est requis',
+                'prenom.required' => 'Le prénom est requis',
+                'email_personnel.required' => 'L\'email est requis',
+                'email_personnel.email' => 'L\'email doit être valide',
+                'email_personnel.unique' => 'Cet email est déjà utilisé',
+                'mot_de_passe.required' => 'Le mot de passe est requis',
+                'mot_de_passe.min' => 'Le mot de passe doit contenir au moins 8 caractères',
+                'role_id.required' => 'Le rôle est requis',
+                'role_id.exists' => 'Le rôle sélectionné n\'est pas valide',
+            ]);
 
-    // Création de l'utilisateur
-    $user = Utilisateur::create([
-        'nom' => $request->nom,
-        'prenom' => $request->prenom,
-        'email_personnel' => $request->email_personnel,
-        'mot_de_passe' => Hash::make($request->mot_de_passe), // Hachage du mot de passe pour la sécurité
-        'email_academique'=> '',
-        'telephone'=> '',
-        'cne'=> '',
-        'num_apogee' => '',
-        'date_naissance' => NULL,
-        'ced_id' => NULL,
-        'lab_id' => NULL,
-        'role_id' => NULL,
-        'etablissement_id' => NULL,
-    ]);
+            // Création de l'utilisateur
+            $user = new Utilisateur();
+            $user->nom = $validated['nom'];
+            $user->prenom = $validated['prenom'];
+            $user->email_personnel = $validated['email_personnel'];
+            $user->mot_de_passe = Hash::make($validated['mot_de_passe']);
+            $user->email_academique = '';
+            $user->telephone = '';
+            $user->cne = '';
+            $user->num_apogee = '';
+            $user->date_naissance = null;
+            $user->ced_id = null;
+            $user->lab_id = null;
+            $user->role_id = $validated['role_id'];
+            $user->etablissement_id = null;
+            $user->save();
 
-    // Connexion de l'utilisateur
-    Auth::login($user);  // Assurez-vous que $user est de type Utilisateur qui étend Authenticatable
+            // Redirection vers la page de connexion avec un message de succès
+            return redirect()->route('login')->with('success', 'Inscription réussie ! Vous pouvez maintenant vous connecter.');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            \Log::error('Erreur lors de l\'inscription : ' . $e->getMessage());
+            return back()->withErrors(['error' => 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.'])->withInput();
+        }
+    }
 
-    // Redirection vers la page appropriée après l'inscription
-    return redirect()->route('login'); // Changez cela selon vos besoins
-}
-
-public function dashboard()
-{
-    $user = Auth::user(); // Récupérer l'utilisateur connecté
-    return view('dashboard', compact('user'));
-}
+    public function dashboard()
+    {
+        $user = Auth::user(); // Récupérer l'utilisateur connecté
+        return view('dashboard', compact('user'));
+    }
 
 }

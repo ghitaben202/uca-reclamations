@@ -79,30 +79,65 @@
                             <div class="alert alert-danger">
                                 <ul>
                                     @foreach ($errors->all() as $error)
-                                        <li>{!! $error !!}</li>
+                                        <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>
                             </div>
                         @endif
 
                         <div class="mb-3 text-start">
-                            <label for="nom" class="form-label  fs-5">Nom</label>
-                            <input id="nom" type="text" name="nom" value="{{ old('nom') }}" required autofocus class="form-control">
+                            <label for="nom" class="form-label fs-5">Nom</label>
+                            <input id="nom" type="text" class="form-control @error('nom') is-invalid @enderror" name="nom" value="{{ old('nom') }}" required autofocus>
+                            @error('nom')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 text-start">
                             <label for="prenom" class="form-label fs-5">Prénom</label>
-                            <input id="prenom" type="text" name="prenom" value="{{ old('prenom') }}" required class="form-control">
+                            <input id="prenom" type="text" class="form-control @error('prenom') is-invalid @enderror" name="prenom" value="{{ old('prenom') }}" required>
+                            @error('prenom')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 text-start">
                             <label for="email_personnel" class="form-label fs-5">Email personnel</label>
-                            <input id="email_personnel" type="email" name="email_personnel" value="{{ old('email_personnel') }}" required class="form-control">
+                            <input id="email_personnel" type="email" class="form-control @error('email_personnel') is-invalid @enderror" name="email_personnel" value="{{ old('email_personnel') }}" required>
+                            @error('email_personnel')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="mb-3 text-start">
                             <label for="mot_de_passe" class="form-label fs-5">Mot de passe</label>
-                            <input id="mot_de_passe" type="password" name="mot_de_passe" required class="form-control">
+                            <input id="mot_de_passe" type="password" class="form-control @error('mot_de_passe') is-invalid @enderror" name="mot_de_passe" required>
+                            @error('mot_de_passe')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label for="role_id" class="form-label fs-5">Rôle</label>
+                            <select id="role_id" name="role_id" class="form-control @error('role_id') is-invalid @enderror" required>
+                                <option value="">Sélectionnez votre rôle</option>
+                                <option value="1" {{ old('role_id') == 1 ? 'selected' : '' }}>Étudiant</option>
+                                <option value="2" {{ old('role_id') == 2 ? 'selected' : '' }}>Doctorant</option>
+                                <option value="3" {{ old('role_id') == 3 ? 'selected' : '' }}>Personnel administratif</option>
+                            </select>
+                            @error('role_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <button type="submit" class="btn btn-custom w-100 mt-3" style="background-color: rgb(172, 94, 5);font-size: 18px;">S'inscrire</button>
