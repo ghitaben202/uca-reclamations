@@ -97,7 +97,7 @@
             @if(auth()->check())
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
                 <i class="fa-solid fa-user"></i>
-                    {{ auth()->user()->nom }}
+                    {{ auth()->user()->nom }} {{ auth()->user()->prenom }}
                 </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">

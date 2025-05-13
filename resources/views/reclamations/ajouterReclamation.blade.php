@@ -104,7 +104,7 @@
             @if(auth()->check())
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
                 <i class="fa-solid fa-user"></i>
-                    {{ auth()->user()->nom }}
+                    {{ auth()->user()->nom }} {{ auth()->user()->prenom }}
                 </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
@@ -137,7 +137,7 @@
     <div class="container">
         <h4>Ajouter une Réclamation</h4>
         <hr>
-        <form method="POST" action="">
+        <form method="POST" action="{{ route('reclamations.store') }}">
             @csrf
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre de réclamation</label>

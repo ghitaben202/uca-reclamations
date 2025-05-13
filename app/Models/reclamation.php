@@ -23,7 +23,6 @@ class Reclamation extends Model
     {
         return $this->belongsTo(Utilisateur::class, 'utilisateur_id');
     }
-
     public function typeReclamation()
     {
 
@@ -32,9 +31,6 @@ class Reclamation extends Model
         return $this->belongsTo(TypeReclamation::class, 'type_reclamation_id');
 
     }
-    
-
-
     public function agent()
     {
         return $this->belongsTo(Agent::class, 'agent_id');
