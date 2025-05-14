@@ -26,24 +26,13 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        // Validation des informations de connexion
-        $credentials = $request->only('email_personnel', 'mot_de_passe');
+        $request->authenticate();
 
-        // Vérification du mot de passe
-        $user = Utilisateur::where('email_personnel', $credentials['email_personnel'])->first();
+        $request->session()->regenerate();
 
-        // Si l'utilisateur existe et que le mot de passe est valide
-        if ($user && Hash::check($credentials['mot_de_passe'], $user->mot_de_passe)) {
-            Auth::login($user);
-            return redirect()->route('dashboard');
-        }
-
-         // Si la connexion échoue
-         return back()->withErrors([
-            'auth' => 'Email ou mot de passe incorrect.',
-        ]);
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

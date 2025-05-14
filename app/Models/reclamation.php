@@ -16,7 +16,24 @@ class Reclamation extends Model
         'agent_id',
         'titre', 
         'description', 
-        'statut'
+        'statut',
+        'reponse',
+        'date_creation',
+        'date_update'
+    ];
+
+    protected $dates = [
+        'date_creation',
+        'date_update',
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $casts = [
+        'date_creation' => 'datetime',
+        'date_update' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
     public function utilisateur()

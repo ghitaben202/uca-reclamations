@@ -91,12 +91,18 @@
                         @endif
 
                         <div class="mb-3">
-                            <label for="email_personnel" class="form-label">Email</label>
-                            <input type="email" name="email_personnel" id="email_personnel" class="form-control  @error('email_personnel') is-invalid @enderror" value="{{ old('email_personnel') }}" required autofocus>
+                            <label for="email" class="form-label">Email (personnel ou académique)</label>
+                            <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus>
+                            @error('email')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="mot_de_passe" class="form-label">Mot de passe</label>
                             <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control @error('mot_de_passe') is-invalid @enderror" required autocomplete="current-password">
+                            @error('mot_de_passe')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
                         @error('auth')
                             <div class="text-danger mb-3">{{ $message }}</div>

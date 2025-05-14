@@ -28,7 +28,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'mot_de_passe' => ['required', 'string'],
         ];
     }
 
@@ -41,14 +41,20 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        // Recherche de l'utilisateur par email personnel ou académique
+        $user = \App\Models\Utilisateur::where('email_personnel', $this->email)
+            ->orWhere('email_academique', $this->email)
+            ->first();
+
+        if (!$user || !\Illuminate\Support\Facades\Hash::check($this->mot_de_passe, $user->mot_de_passe)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => 'Les identifiants fournis sont incorrects.',
             ]);
         }
 
+        \Illuminate\Support\Facades\Auth::login($user);
         RateLimiter::clear($this->throttleKey());
     }
 
