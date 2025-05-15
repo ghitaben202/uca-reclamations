@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\Utilisateur;
-use App\Models\Agent; 
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,22 +27,29 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation des informations de connexion
-        $credentials = $request->only('email_personnel', 'mot_de_passe');
+        $request->validate([
+            'email_personnel' => 'required|email|exists:utilisateurs,email_personnel',
+            'mot_de_passe' => 'required|min:8',
+        ], [
+            'email_personnel.required' => "L'adresse e-mail est requise.",
+            'email_personnel.email' => "L'adresse e-mail n'est pas valide.",
+            'email_personnel.exists' => "Aucun compte trouvé avec cette adresse e-mail.",
+            'mot_de_passe.required' => "Le mot de passe est requis.",
+            'mot_de_passe.min' => "Le mot de passe doit contenir au moins 8 caractères.",
+        ]);
 
         // Vérification du mot de passe
-        $user = Utilisateur::where('email_personnel', $credentials['email_personnel'])->first();
+        $user = Utilisateur::where('email_personnel', $request->email_personnel)->first();
 
-        // Si l'utilisateur existe et que le mot de passe est valide
-        if ($user && Hash::check($credentials['mot_de_passe'], $user->mot_de_passe)) {
+        if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
             Auth::login($user);
             return redirect()->route('dashboard');
         }
 
-         // Si la connexion échoue
-         return back()->withErrors([
-            'auth' => 'Email ou mot de passe incorrect.',
-        ]);
+        // Si le mot de passe est incorrect
+        return back()->withErrors([
+            'mot_de_passe' => 'Le mot de passe est incorrect.',
+        ])->withInput();
     }
 
     /**

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         body {
@@ -59,6 +60,24 @@
             padding: 20px;
             border-radius: 10px;
         }
+        .password-container {
+            position: relative;
+            max-width: 350px;
+            margin: 2rem auto;
+        }
+
+        .password-container input {
+            padding-right: 2.5rem;
+        }
+
+        .password-container i {
+            position: absolute;
+            top: 75%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color:rgb(21, 22, 23);
+        }
     </style>
 </head>
 <body>
@@ -92,13 +111,19 @@
 
                         <div class="mb-3">
                             <label for="email_personnel" class="form-label">Email</label>
-                            <input type="email" name="email_personnel" id="email_personnel" class="form-control  @error('email_personnel') is-invalid @enderror" value="{{ old('email_personnel') }}" required autofocus>
+                            <input type="email" name="email_personnel" id="email_personnel" class="form-control" value="{{ old('email_personnel') }}"  autofocus>
                         </div>
-                        <div class="mb-3">
+                        @error('email_personnel')
+                            <div class="text-danger mb-3">{{ $message }}</div>
+                        @enderror
+                        <div class="mb-3" >
                             <label for="mot_de_passe" class="form-label">Mot de passe</label>
-                            <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control @error('mot_de_passe') is-invalid @enderror" required autocomplete="current-password">
+                            <span class="password-container">
+                                <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control" value="{{ old('mot_de_passe') }}"  autocomplete="current-password">
+                                <i class="bi bi-eye" id="togglePassword" onclick="togglePassword()"></i>
+                            </span>
                         </div>
-                        @error('auth')
+                        @error('mot_de_passe')
                             <div class="text-danger mb-3">{{ $message }}</div>
                         @enderror
                         <button type="submit" class="btn btn-custom w-100">Se connecter</button>
@@ -109,6 +134,17 @@
     </div>
     <footer class="text-center p-3">
         © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
-</footer>
+    </footer>
+    <script>
+        function togglePassword() {
+            const input = document.getElementById("mot_de_passe");
+            const icon = document.getElementById("togglePassword");
+
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            icon.classList.toggle("bi-eye");
+            icon.classList.toggle("bi-eye-slash");
+        }
+    </script>
 </body>
 </html>

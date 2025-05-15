@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         body {
@@ -56,6 +57,24 @@
             background: white;
             padding: 20px;
             border-radius: 10px;
+        }
+        .password-container {
+            position: relative;
+            max-width: 350px;
+            margin: 2rem auto;
+        }
+
+        .password-container input {
+            padding-right: 2.5rem;
+        }
+
+        .password-container i {
+            position: absolute;
+            top: 75%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color:rgb(21, 22, 23);
         }
         @media (max-width: 768px) {
             .card-custom,
@@ -108,7 +127,10 @@
 
                         <div class="mb-3 text-start">
                             <label for="password" class="form-label">Mot de passe</label>
-                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="current-password">
+                            <span class="password-container">
+                                <input type="password" name="password" id="password" class="form-control" required autocomplete="current-password">
+                                <i class="bi bi-eye" id="togglePassword" onclick="togglePassword()" style="cursor: pointer;"></i>
+                            </span>
                             @error('password')
                                 <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
@@ -123,5 +145,16 @@
     <footer class="text-center p-3">
         © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
     </footer>
+    <script>
+        function togglePassword() {
+            const input = document.getElementById("password");
+            const icon = document.getElementById("togglePassword");
+
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            icon.classList.toggle("bi-eye");
+            icon.classList.toggle("bi-eye-slash");
+        }
+    </script>
 </body>
 </html>

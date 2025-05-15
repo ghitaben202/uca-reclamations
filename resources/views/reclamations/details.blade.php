@@ -18,10 +18,12 @@
         }
         #sidebar {
             width: 250px;
-            height: 100vh;
-            position: fixed;
+            height: 180vh;
+            position: absolute;
+             left:0;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
+            overflow-y: auto;
         }
         #content {
             margin-left: 250px;
@@ -49,6 +51,14 @@
         #toggleSidebar{
            background-color:rgba(234, 213, 192, 0.4);
         }
+        .logout-link {
+            background-color: transparent;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .logout-link:hover {
+            background-color: rgba(156, 109, 50, 0.83);
+            color: white;
+        }
         .tab {
             display: inline-block;
             padding: 10px 20px;
@@ -59,7 +69,7 @@
         }
 
         .active {
-            background-color: #1e3a64; /* Bleu foncé */
+            background-color: #1e3a64; 
             color: white;
         }
 
@@ -78,11 +88,11 @@
             @if(auth()->check())
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
                 <i class="fa-solid fa-user"></i>
-                    {{ auth()->user()->nom }}
+                    {{ auth()->user()->nom }} {{ auth()->user()->prenom }}
                 </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                    <li><a class="dropdown-item logout-link" href="{{ route('logout') }}"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt me-2"></i>Déconnexion</a>
                     </li>
@@ -115,26 +125,20 @@
         <div class="container">
             <h4>Détails de la Réclamation</h4>
             <hr>
-
             <div class="d-flex justify-content-end m-3">
                 <button class="tab active d-inline" id="btnContenu" onclick="switchTab('reclamation', this)">Contenu</button>
                 <button class="tab d-inline" id="btnReponse" onclick="switchTab('reponse', this)">Réponses</button>
             </div>
-
-
             <div class="row px-2">
-
-                <div class="col-md-8" id="reclamation">
+                <div class="col-md-8 mb-3" id="reclamation">
                     <div class="details bg-light p-3">
                     <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
                     <hr>
                     <h4 class="">Description :</h4><hr>
-                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>
-                    
+                    <span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->description }}</span>  
                     </div>
                 </div>
-
-                <div class="col-md-8" id="reponse">
+                <div class="col-md-8 mb-3" id="reponse">
                     <div class="details bg-light p-3">
                     <h4 class="">Titre :<span style="font-size:16px; margin-left:10px; color: #6f6d72;">{{ $reclamation->titre }}</span></h4>
                     <hr>
@@ -185,7 +189,6 @@
             document.getElementById('btnContenu').classList.remove('active');
             document.getElementById('btnReponse').classList.remove('active');
 
-            // Ajouter la classe active au bouton cliqué
             btn.classList.add('active');
         }
 

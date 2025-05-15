@@ -87,7 +87,7 @@ class ReclamationController extends Controller
         }
 
 
-        // 2. Créer la réclamation
+        // Créer la réclamation
         $reclamation = new Reclamation();
         $reclamation->titre = $request->titre;
         $reclamation->description = $request->description;

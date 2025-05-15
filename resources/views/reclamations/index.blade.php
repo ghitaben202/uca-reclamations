@@ -21,10 +21,11 @@
         }
         #sidebar {
             width: 250px;
-            height: 100vh;
-            position: fixed;
+            height: 180vh;
+            position: absolute;
             background-color: rgba(229, 221, 208, 0.5);
             padding-top: 20px;
+            overflow-y: auto;
         }
         #content {
             margin-left: 250px;
@@ -72,29 +73,21 @@
                 display: none; 
                 height: 100vh;
             }
-
             #content {
                 margin-left: 0;
             }
-
             #toggleSidebar {
                 display: inline-block;
             }
-
-    
             table {
                 display: block;
                 overflow-x: auto;
                 white-space: nowrap;
             }
-
-   
             h4, .btn {
                 font-size: 1rem;
             }
-
-
-    }
+        }
        
     </style>
 </head>
@@ -106,7 +99,7 @@
             @if(auth()->check())
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" id="btn-user">
                 <i class="fa-solid fa-user"></i>
-                    {{ auth()->user()->nom }}
+                    {{ auth()->user()->nom }} {{ auth()->user()->prenom }}
                 </button>
             @endif
                 <ul class="dropdown-menu dropdown-menu-end">
