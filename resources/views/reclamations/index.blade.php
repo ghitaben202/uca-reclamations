@@ -139,6 +139,12 @@
     <div class="container">
         <h4>Mes Réclamations</h4>
         <hr>
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <div class="d-flex justify-content-end mb-2"><a href="{{ route('reclamations.ajouterReclamation')}}" class="btn btn-warning ">Ajouter une reclamation +</a></div>
         <div class="bg-light p-3">
         <table id="reclamationsTable" class="table table-bordered">

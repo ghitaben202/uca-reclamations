@@ -117,8 +117,9 @@ class ReclamationController extends Controller
         $reclamation->date_creation = now();
         $reclamation->save();
 
-        // Retour vers la page du tableau de bord avec un message de succès
-        return redirect()->route('reclamations.ajouterReclamation')->with('message', 'Votre réclamation a été soumise avec succès.');
+        // Retour vers la page des réclamations avec un message de succès
+        return redirect()->route('reclamations.index')
+            ->with('success', 'Votre réclamation a été soumise avec succès.');
     }
 
     public function show($id)
