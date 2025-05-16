@@ -63,17 +63,17 @@
 
         .password-container {
             position: relative;
-            max-width: 350px;
-            margin: 2rem auto;
+            width: 100%;
 
         }
         .password-container input {
             padding-right: 2.5rem;
+            width: 100%;
         }
 
         .password-container i {
             position: absolute;
-            top: 75%;
+            top: 50%;
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
@@ -125,7 +125,7 @@
                             @enderror
 
                         </div>
-                        <div class="mb-3" >
+                        <div class="mb-3">
                             <label for="mot_de_passe" class="form-label">Mot de passe</label>
 
                             <div class="password-container">
