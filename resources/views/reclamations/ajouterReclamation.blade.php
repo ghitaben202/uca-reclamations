@@ -146,32 +146,69 @@
                 </div>
             @endif
         <hr>
-        <form method="POST" action="{{ route('reclamations.store') }}" >
+        <form method="POST" action="{{ route('reclamations.store') }}" class="needs-validation" novalidate>
             @csrf
             <div class="mb-3">
                 <label for="titre" class="form-label">Titre de réclamation <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="titre" required>
+                <input type="text" class="form-control @error('titre') is-invalid @enderror" 
+                       name="titre" id="titre" required 
+                       minlength="5" maxlength="255"
+                       placeholder="Entrez un titre descriptif pour votre réclamation">
+                @error('titre')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <div class="form-text">Le titre doit contenir entre 5 et 255 caractères.</div>
             </div>
+
             <div class="mb-3">
                 <label for="role" class="form-label">Catégorie du réclamant <span class="text-danger">*</span></label>
-                <select id="role" name="role" class="form-control" hx-post="{{ route('reclamations.getFields') }}"
-                hx-trigger="change"
-                hx-target="#fields-container"
-                hx-swap="innerHTML" required>
-                    <option value="">Sélectionnez une catégorie</option>
+                <select id="role" name="role" 
+                        class="form-control @error('role') is-invalid @enderror" 
+                        hx-post="{{ route('reclamations.getFields') }}"
+                        hx-trigger="change"
+                        hx-target="#fields-container"
+                        hx-swap="innerHTML" required>
+                    <option value="" disabled selected>Veuillez choisir votre catégorie</option>
                     @foreach($roles as $role)
-                        <option value="{{ $role->nom }}">{{ $role->nom }}</option>
+                        <option value="{{ $role->nom }}" {{ old('role') == $role->nom ? 'selected' : '' }}>
+                            {{ $role->nom }}
+                        </option>
                     @endforeach
                 </select>
+                @error('role')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <div class="form-text">Veuillez sélectionner votre catégorie pour afficher les champs spécifiques.</div>
             </div>
-            <div id="fields-container"></div>
 
-            <button type="submit" class="btn btn-warning">Ajouter une réclamation</button><br>
-            @if(session('message'))
-                <div class="alert alert-success">{{ session('message') }}</div>
-            @endif
+            <div id="fields-container">
+                @if(old('role'))
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> Veuillez d'abord sélectionner votre établissement avant de choisir le type de réclamation.
+                    </div>
+                @endif
+            </div>
+
+            <button type="submit" class="btn btn-warning">
+                <i class="fas fa-paper-plane me-2"></i>Envoyer la réclamation
+            </button>
         </form>
-        
+
+        @if(session('success'))
+            <div class="alert alert-success mt-3">
+                <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger mt-3">
+                <i class="fas fa-exclamation-circle me-2"></i>{{ session('error') }}
+            </div>
+        @endif
     </div>
     </div>
     <script>
@@ -187,7 +224,20 @@
             }
         });
         
-        
+        // Validation côté client
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     </script>
     
 </body>
