@@ -53,23 +53,24 @@
             padding: 20px;
             border-radius: 10px;
         }
+
         .password-container {
             position: relative;
-            max-width: 350px;
-            margin: 2rem auto;
+            width: 100%;
         }
 
         .password-container input {
             padding-right: 2.5rem;
+            width: 100%;
         }
 
         .password-container i {
             position: absolute;
-            top: 75%;
+            top: 50%;
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
-            color:rgb(21, 22, 23);
+            color: rgb(21, 22, 23);
         }
     </style>
 </head>
@@ -77,7 +78,11 @@
 
     <div class="container container-custom">
         <div class="row w-100 d-flex justify-content-center align-items-center">
-
+            <div class="col-12 mb-4">
+                <a href="/" class="btn btn-custom">
+                    <i class="fi fi-rr-arrow-left"></i> Retour à l'accueil
+                </a>
+            </div>
             <!-- Image et Titre -->
             <div class="col-md-6 ">
                 <div class="card card-custom shadow w-100" style="background-color: rgba(255, 255, 255, 0.6);">
@@ -136,10 +141,10 @@
 
                         <div class="mb-3 text-start">
                             <label for="mot_de_passe" class="form-label fs-5">Mot de passe</label>
-                            <span class="password-container">
-                                <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control " >
-                                <i class="bi bi-eye" id="togglePassword" onclick="togglePassword()"></i>
-                            </span>
+                            <div class="password-container">
+                                <input id="mot_de_passe" type="password" class="form-control @error('mot_de_passe') is-invalid @enderror" name="mot_de_passe" required>
+                                <i class="fi fi-rr-eye" id="togglePassword"></i>
+                            </div>
                             @error('mot_de_passe')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -166,23 +171,28 @@
                     </form>
                 </div>
             </div> 
-
         </div>
     </div>
     <footer class="text-center p-3">
         © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
     </footer>
     <script>
-        function togglePassword() {
-            const input = document.getElementById("mot_de_passe");
-            const icon = document.getElementById("togglePassword");
-
-            const isPassword = input.type === "password";
-            input.type = isPassword ? "text" : "password";
-            icon.classList.toggle("bi-eye");
-            icon.classList.toggle("bi-eye-slash");
-        }
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('mot_de_passe');
+            const icon = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fi-rr-eye');
+                icon.classList.add('fi-rr-eye-crossed');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fi-rr-eye-crossed');
+                icon.classList.add('fi-rr-eye');
+            }
+        });
     </script>
+
 </body>
 </html>
 

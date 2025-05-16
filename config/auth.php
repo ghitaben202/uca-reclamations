@@ -68,6 +68,7 @@ return [
         'utilisateurs' => [
             'driver' => 'eloquent',
             'model' => App\Models\Utilisateur::class,
+            'password_field' => 'mot_de_passe',
         ],
         'agents' => [
             'driver' => 'eloquent',

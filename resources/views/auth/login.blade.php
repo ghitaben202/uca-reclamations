@@ -60,12 +60,13 @@
             padding: 20px;
             border-radius: 10px;
         }
+
         .password-container {
             position: relative;
             max-width: 350px;
             margin: 2rem auto;
-        }
 
+        }
         .password-container input {
             padding-right: 2.5rem;
         }
@@ -77,12 +78,18 @@
             transform: translateY(-50%);
             cursor: pointer;
             color:rgb(21, 22, 23);
+
         }
     </style>
 </head>
 <body>
     <div class="container container-custom">
         <div class="row w-100 d-flex justify-content-center align-items-center">
+            <div class="col-12 mb-4">
+                <a href="/" class="btn btn-custom">
+                    <i class="fi fi-rr-arrow-left"></i> Retour à l'accueil
+                </a>
+            </div>
             <!-- Image et Titre -->
             <div class="col-md-6 ">
                 <div class="card card-custom1 shadow w-100">
@@ -110,22 +117,28 @@
                         @endif
 
                         <div class="mb-3">
-                            <label for="email_personnel" class="form-label">Email</label>
-                            <input type="email" name="email_personnel" id="email_personnel" class="form-control" value="{{ old('email_personnel') }}"  autofocus>
+
+                            <label for="email" class="form-label">Email (personnel ou académique)</label>
+                            <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus>
+                            @error('email')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
+
                         </div>
-                        @error('email_personnel')
-                            <div class="text-danger mb-3">{{ $message }}</div>
-                        @enderror
                         <div class="mb-3" >
                             <label for="mot_de_passe" class="form-label">Mot de passe</label>
-                            <span class="password-container">
-                                <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control" value="{{ old('mot_de_passe') }}"  autocomplete="current-password">
-                                <i class="bi bi-eye" id="togglePassword" onclick="togglePassword()"></i>
-                            </span>
+
+                            <div class="password-container">
+                                <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control @error('mot_de_passe') is-invalid @enderror" required autocomplete="current-password">
+                                <i class="fi fi-rr-eye" id="togglePassword"></i>
+                            </div>
+                            @error('mot_de_passe')
+                                <div class="text-danger mt-1">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('mot_de_passe')
-                            <div class="text-danger mb-3">{{ $message }}</div>
-                        @enderror
+                        <div class="mb-3 text-end">
+                            <a href="#" class="text-decoration-none" style="color: rgb(172, 94, 5);">Mot de passe oublié ?</a>
+                        </div>
                         <button type="submit" class="btn btn-custom w-100">Se connecter</button>
                     </form>
                 </div>
@@ -136,15 +149,20 @@
         © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
     </footer>
     <script>
-        function togglePassword() {
-            const input = document.getElementById("mot_de_passe");
-            const icon = document.getElementById("togglePassword");
-
-            const isPassword = input.type === "password";
-            input.type = isPassword ? "text" : "password";
-            icon.classList.toggle("bi-eye");
-            icon.classList.toggle("bi-eye-slash");
-        }
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('mot_de_passe');
+            const icon = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fi-rr-eye');
+                icon.classList.add('fi-rr-eye-crossed');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fi-rr-eye-crossed');
+                icon.classList.add('fi-rr-eye');
+            }
+        });
     </script>
 </body>
 </html>

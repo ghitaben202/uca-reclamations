@@ -9,6 +9,7 @@ use App\Models\Etablissement;
 use App\Models\CentreEtude;
 use App\Models\Utilisateur;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Agent;
 
 class ReclamationController extends Controller
 {
@@ -23,7 +24,7 @@ class ReclamationController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-        'role' => strtolower($request->input('role')),
+            'role' => strtolower($request->input('role')),
         ]);
         // Validation des champs communs
         $request->validate([
@@ -73,6 +74,7 @@ class ReclamationController extends Controller
             default:
                 abort(400, 'Rôle non reconnu');
         }
+
         $utilisateur = Auth::user(); // Utilisateur connecté
 
         // Mise à jour des champs manquants dans le profil de l'utilisateur
@@ -86,7 +88,25 @@ class ReclamationController extends Controller
             ]);
         }
 
+        // Récupérer le type de réclamation
+        $typeReclamation = typeReclamation::findOrFail($request->type_reclamation_id);
+        
+        // Trouver les agents disponibles pour ce type de réclamation
+        $agents = Agent::where('type_reclamations_id', $request->type_reclamation_id)->get();
+        
+        if ($agents->isEmpty()) {
+            return redirect()->back()->with('error', 'Aucun agent n\'est disponible pour ce type de réclamation.');
+        }
 
+
+        // Trouver l'agent avec le moins de réclamations en cours
+        $agent = $agents->map(function ($agent) {
+            $agent->reclamations_count = $agent->reclamations()
+                ->where('statut', '!=', 'traitée')
+                ->count();
+            return $agent;
+        })->sortBy('reclamations_count')->first();
+        
         // Créer la réclamation
         $reclamation = new Reclamation();
         $reclamation->titre = $request->titre;
@@ -94,18 +114,13 @@ class ReclamationController extends Controller
         $reclamation->statut = 'en cours';
         $reclamation->utilisateur_id = auth()->id();
         $reclamation->type_reclamations_id = $request->type_reclamation_id;
-        
-        // Récupérer l'agent_id à partir du type de réclamation
-        $typeReclamation = typeReclamation::with('agents')->findOrFail($request->type_reclamation_id);
-        if ($typeReclamation->agents->isNotEmpty()) {
-            $reclamation->agent_id = $typeReclamation->agents->first()->id;
-        } else {
-            return redirect()->back()->with('error', 'Aucun agent n\'est associé à ce type de réclamation.');
-        }
-        
+        $reclamation->agent_id = $agent->id;
+        $reclamation->date_creation = now();
         $reclamation->save();
-        // Retour vers la page du tableau de bord avec un message de succès
-        return redirect()->route('reclamations.ajouterReclamation')->with('message' , 'Votre réclamation a été soumise avec succès.');
+
+        // Retour vers la page des réclamations avec un message de succès
+        return redirect()->route('reclamations.index')
+            ->with('success', 'Votre réclamation a été soumise avec succès.');
     }
 
     public function show($id)

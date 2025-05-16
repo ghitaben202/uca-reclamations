@@ -37,14 +37,19 @@ class Utilisateur extends Authenticatable
         'mot_de_passe',  // Cache le mot de passe pour éviter de l'afficher
     ];
     
+    public function getAuthIdentifierName()
+    {
+        return 'id';
+    }
+
     public function getAuthIdentifier()
     {
-    return $this->getKey(); // Retourne toujours l'ID
+        return $this->id;
     }
 
     public function getAuthPassword()
     {
-        return $this->mot_de_passe;  // Utilise le champ 'mot_de_passe'
+        return $this->mot_de_passe;
     }
 
     public function reclamations()

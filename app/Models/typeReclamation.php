@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\Agent;
 class typeReclamation extends Model
 {
     use HasFactory;
@@ -21,7 +21,7 @@ class typeReclamation extends Model
 
     public function agents()
     {
-        return $this->belongsToMany(Agent::class, 'agent_type_reclamation');
+        return $this->hasMany(Agent::class, 'type_reclamations_id');
     }
 
 }

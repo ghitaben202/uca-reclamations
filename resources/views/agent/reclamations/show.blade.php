@@ -39,8 +39,8 @@
                                     <div class="col-sm-8">{{ $reclamation->id }}</div>
                                 </div>
                                 <div class="row mb-3">
-                                    <div class="col-sm-4 fw-bold">Sujet :</div>
-                                    <div class="col-sm-8">{{ $reclamation->sujet }}</div>
+                                    <div class="col-sm-4 fw-bold">Titre :</div>
+                                    <div class="col-sm-8">{{ $reclamation->titre }}</div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-4 fw-bold">Statut :</div>

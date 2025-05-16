@@ -25,31 +25,13 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(Request $request)
+    public function store(LoginRequest $request)
     {
-        $request->validate([
-            'email_personnel' => 'required|email|exists:utilisateurs,email_personnel',
-            'mot_de_passe' => 'required|min:8',
-        ], [
-            'email_personnel.required' => "L'adresse e-mail est requise.",
-            'email_personnel.email' => "L'adresse e-mail n'est pas valide.",
-            'email_personnel.exists' => "Aucun compte trouvé avec cette adresse e-mail.",
-            'mot_de_passe.required' => "Le mot de passe est requis.",
-            'mot_de_passe.min' => "Le mot de passe doit contenir au moins 8 caractères.",
-        ]);
+        $request->authenticate();
 
-        // Vérification du mot de passe
-        $user = Utilisateur::where('email_personnel', $request->email_personnel)->first();
+        $request->session()->regenerate();
 
-        if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
-            Auth::login($user);
-            return redirect()->route('dashboard');
-        }
-
-        // Si le mot de passe est incorrect
-        return back()->withErrors([
-            'mot_de_passe' => 'Le mot de passe est incorrect.',
-        ])->withInput();
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**

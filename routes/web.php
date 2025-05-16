@@ -68,9 +68,9 @@ Route::get('/agent/login', function () {
 })->name('agent.login');
 
 Route::post('/agent/login', [AgentAuthController::class, 'login'])->name('agent.login');
-Route::post('/agent/logout', [AgentAuthController::class, 'logout'])->name('agent.logout');
 
 Route::middleware(['auth:agent'])->prefix('agent')->name('agent.')->group(function () {
+    Route::post('/logout', [AgentAuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [AgentDashboardController::class, 'index'])->name('dashboard');
     Route::get('/profile', [AgentProfileController::class, 'edit'])->name('profile');
     Route::get('/profile/edit', [AgentProfileController::class, 'edit'])->name('profile.edit');
