@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -147,7 +146,13 @@
 
                 <div class="col-md-4">
                     <div class="infos bg-light p-3">
-                    <p class="">Statut :<span style="font-size:16px; margin-left:10px; padding:5px 5px; color:rgb(255, 255, 255);" class="btn btn-warning">{{ $reclamation->statut }}</span></p>
+                    <p class="">Statut :<span style="font-size:16px; margin-left:10px; padding:5px 5px; color:white;" class="badge 
+                        @if($reclamation->statut == 'en cours') bg-warning
+                        @elseif($reclamation->statut == 'clôturée') bg-success
+                        @else bg-danger
+                        @endif">
+                        {{ $reclamation->statut }}
+                    </span></p>
                     <hr>
                     <p class="">Date de soumission :
                     <span style="font-size:14px; margin-left:10px; color:rgb(109, 114, 109);">{{ $reclamation->date_creation}}</span>

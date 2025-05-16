@@ -156,7 +156,15 @@
                     <tr>
                         <td>{{ $reclamation->id }}</td>
                         <td>{{ $reclamation->titre }}</td>
-                        <td>{{ $reclamation->statut }}</td>
+                        <td>
+                            <span class="badge 
+                                @if($reclamation->statut == 'en cours') bg-warning
+                                @elseif($reclamation->statut == 'clôturée') bg-success
+                                @else bg-danger
+                                @endif">
+                                {{ $reclamation->statut }}
+                            </span>
+                        </td>
                         <td>{{ $reclamation->date_creation }}</td>
                         <td>
                         <a href="{{ route('reclamations.details', $reclamation->id) }}" class="btn btn-warning">Voir les détails</a>
