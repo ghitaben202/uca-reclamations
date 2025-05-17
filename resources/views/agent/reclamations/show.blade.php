@@ -58,6 +58,40 @@
                                     <div class="col-sm-4 fw-bold">Date de Création :</div>
                                     <div class="col-sm-8">{{ \Carbon\Carbon::parse($reclamation->date_creation)->format('d/m/Y') }}</div>
                                 </div>
+                                <!-- Bouton Détails réclamant -->
+                                <div class="row mb-3">
+                                    <div class="col-sm-4 fw-bold">Réclamant :</div>
+                                    <div class="col-sm-8">
+                                        <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailsReclamantModal">
+                                            Détails réclamant
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- Modale Bootstrap pour les détails du réclamant -->
+                                <div class="modal fade" id="detailsReclamantModal" tabindex="-1" aria-labelledby="detailsReclamantModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="detailsReclamantModalLabel">Informations du réclamant</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <ul class="list-group">
+                                          <li class="list-group-item"><strong>ID :</strong> {{ $reclamation->utilisateur->id ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Nom :</strong> {{ $reclamation->utilisateur->nom ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Prénom :</strong> {{ $reclamation->utilisateur->prenom ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Email académique :</strong> {{ $reclamation->utilisateur->email_academique ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Email personnel :</strong> {{ $reclamation->utilisateur->email_personnel ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Téléphone :</strong> {{ $reclamation->utilisateur->telephone ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>CNE :</strong> {{ $reclamation->utilisateur->cne ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Numéro Apogée :</strong> {{ $reclamation->utilisateur->num_apogee ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Date de naissance :</strong> {{ $reclamation->utilisateur->date_naissance ?? 'N/A' }}</li>
+                                          <li class="list-group-item"><strong>Établissement :</strong> {{ $reclamation->utilisateur->etablissement->nom ?? 'Non renseigné' }}</li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
