@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         body {
@@ -76,7 +77,6 @@
             cursor: pointer;
             color: rgb(21, 22, 23);
         }
-
         @media (max-width: 768px) {
             .card-custom,
             .card-custom1 {
@@ -133,6 +133,7 @@
 
                         <div class="mb-3 text-start">
                             <label for="password" class="form-label">Mot de passe</label>
+
                             <div class="password-container">
                                 <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required autocomplete="current-password">
                                 <i class="fi fi-rr-eye" id="togglePassword"></i>

@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use App\Models\Utilisateur;
-use App\Models\Agent; 
 
 class AuthenticatedSessionController extends Controller
 {

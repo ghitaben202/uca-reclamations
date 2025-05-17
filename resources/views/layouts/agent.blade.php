@@ -19,8 +19,6 @@
             font-family: var(--font-text);
             font-size: 16px;
         }
-
-        /* Styles pour les titres */
         h1, h2, h3, h4, h5, h6, 
         .card-header h5,
         .nav-link,
@@ -28,14 +26,10 @@
         .dropdown-toggle {
             font-family: var(--font-title);
         }
-
-        /* Styles spécifiques pour les titres */
         .card-header h5 {
             font-weight: 600;
             letter-spacing: 0.5px;
         }
-
-        /* Styles pour le texte */
         p, label, input, textarea, select, 
         .form-text, .alert, .table {
             font-family: var(--font-text);
@@ -99,8 +93,6 @@
             background-color: rgba(156, 109, 50, 0.83);
             color: white;
         }
-
-        /* Styles pour les tableaux */
         .table th {
             font-family: var(--font-title);
             font-weight: 600;
@@ -109,19 +101,13 @@
         .table td {
             font-family: var(--font-text);
         }
-
-        /* Styles pour les boutons */
         .btn {
             font-family: var(--font-text);
             font-weight: 500;
         }
-
-        /* Styles pour les alertes */
         .alert {
             font-family: var(--font-text);
         }
-
-        /* Styles pour les formulaires */
         .form-label {
             font-weight: 500;
         }

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
         body {
@@ -63,8 +64,8 @@
         .password-container {
             position: relative;
             width: 100%;
-        }
 
+        }
         .password-container input {
             padding-right: 2.5rem;
             width: 100%;
@@ -76,7 +77,8 @@
             right: 10px;
             transform: translateY(-50%);
             cursor: pointer;
-            color: rgb(21, 22, 23);
+            color:rgb(21, 22, 23);
+
         }
     </style>
 </head>
@@ -115,14 +117,17 @@
                         @endif
 
                         <div class="mb-3">
+
                             <label for="email" class="form-label">Email (personnel ou académique)</label>
                             <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus>
                             @error('email')
                                 <div class="text-danger mt-1">{{ $message }}</div>
                             @enderror
+
                         </div>
                         <div class="mb-3">
                             <label for="mot_de_passe" class="form-label">Mot de passe</label>
+
                             <div class="password-container">
                                 <input type="password" name="mot_de_passe" id="mot_de_passe" class="form-control @error('mot_de_passe') is-invalid @enderror" required autocomplete="current-password">
                                 <i class="fi fi-rr-eye" id="togglePassword"></i>
@@ -134,9 +139,6 @@
                         <div class="mb-3 text-end">
                             <a href="#" class="text-decoration-none" style="color: rgb(172, 94, 5);">Mot de passe oublié ?</a>
                         </div>
-                        @error('auth')
-                            <div class="text-danger mb-3">{{ $message }}</div>
-                        @enderror
                         <button type="submit" class="btn btn-custom w-100">Se connecter</button>
                     </form>
                 </div>

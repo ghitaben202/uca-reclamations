@@ -98,6 +98,7 @@ class ReclamationController extends Controller
             return redirect()->back()->with('error', 'Aucun agent n\'est disponible pour ce type de réclamation.');
         }
 
+
         // Trouver l'agent avec le moins de réclamations en cours
         $agent = $agents->map(function ($agent) {
             $agent->reclamations_count = $agent->reclamations()
@@ -105,7 +106,7 @@ class ReclamationController extends Controller
                 ->count();
             return $agent;
         })->sortBy('reclamations_count')->first();
-
+        
         // Créer la réclamation
         $reclamation = new Reclamation();
         $reclamation->titre = $request->titre;

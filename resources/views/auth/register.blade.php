@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&family=Almarai:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body {
             background: rgba(229, 221, 208, 0.5);
@@ -130,7 +131,7 @@
 
                         <div class="mb-3 text-start">
                             <label for="email_personnel" class="form-label fs-5">Email personnel</label>
-                            <input id="email_personnel" type="email" class="form-control @error('email_personnel') is-invalid @enderror" name="email_personnel" value="{{ old('email_personnel') }}" required>
+                            <input id="email_personnel" type="email" class="form-control @error('email_personnel') is-invalid @enderror" name="email_personnel" value="{{ old('email_personnel') }}">
                             @error('email_personnel')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -170,28 +171,28 @@
                     </form>
                 </div>
             </div> 
-
         </div>
     </div>
-<footer class="text-center p-3">
-    © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
-</footer>
-<script>
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const passwordInput = document.getElementById('mot_de_passe');
-        const icon = this;
-        
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('fi-rr-eye');
-            icon.classList.add('fi-rr-eye-crossed');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('fi-rr-eye-crossed');
-            icon.classList.add('fi-rr-eye');
-        }
-    });
-</script>
+    <footer class="text-center p-3">
+        © Copyright 2025 <strong>UCA</strong>. Tous droits réservés.
+    </footer>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('mot_de_passe');
+            const icon = this;
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fi-rr-eye');
+                icon.classList.add('fi-rr-eye-crossed');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fi-rr-eye-crossed');
+                icon.classList.add('fi-rr-eye');
+            }
+        });
+    </script>
+
 </body>
 </html>
 
